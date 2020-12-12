@@ -1,0 +1,54 @@
+﻿@model DAW_project.Models.User
+
+<h2>Inregistrare utilizator</h2>
+
+<br />
+@using (Html.BeginForm(actionName: "New", controllerName: "Users"))
+{
+
+    @Html.ValidationSummary(false, null, new { @class = "text-danger" })
+
+    @Html.LabelFor(m => m.Email)
+    @Html.TextBoxFor(m => m.Email, null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
+    <br />
+    <br />
+    @Html.LabelFor(m => m.Password)
+    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Password, null, new { @class = "text-danger" }); ;
+    <br />
+    <br />
+    //@Html.Label("Password again")
+    //@Html.Password("PasswordVerif",null, new { @class = "form-control" })
+    //@Html.ValidationMessage("PasswordVerif",null, new { @class = "test-danger" }); ;
+    <br />
+    <br />
+    @Html.LabelFor(m => m.FirstName, "Nume")
+    @Html.TextBoxFor(m => m.FirstName, null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.FirstName, null, new { @class = "text-danger" })
+    <br />
+    <br />
+    @Html.LabelFor(m => m.LastName)
+    @Html.TextBoxFor(m => m.LastName, null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.LastName, null, new { @class = "text-danger" })
+    <br />
+    <br />
+    @Html.LabelFor(m => m.PhoneNumber)
+    @Html.TextBoxFor(m => m.PhoneNumber, null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.PhoneNumber, null, new { @class = "text-danger" })
+    <br />
+    <br />
+    @Html.LabelFor(m => m.BirthDate)
+    <input type="date" id="birthday" name="BirthDate">
+     //@Html.TextBoxFor(m => m.BirthDate, new { @class = "datepicker form-control" })//TO DO
+    @Html.ValidationMessageFor(m => m.BirthDate, null, new { @class = "text-danger" })
+    <br />
+    <br />
+    @Html.LabelFor(m => m.Privacy)
+    @Html.DropDownListFor(m => m.Privacy, new SelectList(Enum.GetValues(typeof(DAW_project.Models.User.PrivacyEnum))),
+    new { @class = "form-control" })
+    <br />
+    <br />
+    <button class="btn btn-success" type="submit">Inregistrare</button>
+
+}

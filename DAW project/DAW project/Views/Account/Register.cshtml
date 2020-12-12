@@ -18,6 +18,18 @@
         </div>
     </div>
     <div class="form-group">
+        @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
@@ -27,6 +39,13 @@
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Privacy, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.Privacy, new SelectList(Enum.GetValues(typeof(DAW_project.Models.RegisterViewModel.PrivacyEnum))),
+            new { @class = "form-control" })
         </div>
     </div>
     <div class="form-group">

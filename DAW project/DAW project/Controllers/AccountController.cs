@@ -15,6 +15,8 @@ namespace DAW_project.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+        private readonly Models.ApplicationDbContext db = new Models.ApplicationDbContext();
+
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -151,7 +153,7 @@ namespace DAW_project.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName= model.LastName, Privacy= model.Privacy };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

@@ -1,0 +1,14 @@
+﻿@model DAW_project.Models.ApplicationUser
+
+<h2>Pagina Utilizator</h2>
+
+@Html.DisplayTextFor(m => m.FirstName)
+<br />
+@Html.DisplayTextFor(m => m.LastName)
+<br />
+<div>
+    @foreach (var post in ViewBag.ApplicationUser.UserPosts)
+    {
+
+    }
+</div>
