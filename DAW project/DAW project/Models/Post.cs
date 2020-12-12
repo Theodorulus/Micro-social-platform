@@ -22,9 +22,6 @@ namespace DAW_project.Models
 
         public virtual ApplicationUser User { get; set; }
 
-        [ForeignKey("Post_Id")]
-        public virtual ICollection<Notification> ReceivedNotifications { get; set; }
-
         public virtual ICollection<Comment> Comments { get; set; }
     }
 }

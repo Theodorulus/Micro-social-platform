@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -23,7 +24,10 @@ namespace DAW_project.Models
         public PrivacyEnum Privacy { get; set; }
         public virtual ICollection<Comment> UserComments { get; set; }
         public virtual ICollection<Post> UserPosts { get; set; }
-
+        [ForeignKey("Admin_Id")]
+        public virtual ICollection<Notification> AdminNotifications { get; set; }
+        [ForeignKey("User_Id")]
+        public virtual ICollection<Notification> UserNotifications { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -37,6 +41,7 @@ namespace DAW_project.Models
         //public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
 
         public static ApplicationDbContext Create()
         {

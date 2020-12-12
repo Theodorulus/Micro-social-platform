@@ -14,13 +14,15 @@ namespace DAW_project.Models
         
         public string Text { get; set; }
 
+        public string Type { get; set; }
+
         [ForeignKey("Admin")]
         public string Admin_Id { get; set; }
         public virtual ApplicationUser Admin { get; set; }
 
-        [ForeignKey("Post")]
-        public int Post_Id { get; set; }
-        public virtual Post Post { get; set; }
+        [ForeignKey("User")]
+        public string User_Id { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
         public DateTime RequestTime { get; set; }
     }

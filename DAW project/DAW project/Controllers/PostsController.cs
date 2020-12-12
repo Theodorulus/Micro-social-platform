@@ -150,10 +150,11 @@ namespace DAW_project.Controllers
             }
             else if (User.IsInRole("Administrator"))
             {
+                string iduser = post.UserId;
                 db.Posts.Remove(post);
                 db.SaveChanges();
                 TempData["message"] = "Postarea a fost stearsa!";
-                return Redirect("/Notification/New/" + id);
+                return Redirect("/Notifications/NewPost/" + iduser);
             }
             else
             {

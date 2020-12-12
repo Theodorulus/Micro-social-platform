@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (DAW_project.Models.Notification notif in ViewBag.Notifications)
+{
+<div class="panel panel-default">
+
+    @if (notif.Text != null && notif.Type == "Post")
+    {
+        <p>Un admin a sters o postare a dumneavoastra cu urmatorul mesaj: "@notif.Text"</p>
+    }
+    @if (notif.Text == null && notif.Type == "Post")
+    {
+        <p>Un admin a sters o postare a dumneavoastra.</p>
+    }
+
+    @if (notif.Text != null && notif.Type == "Comment")
+    {
+        <p>Un admin a sters un comentariu al dumneavoastra cu urmatorul mesaj: "@notif.Text"</p>
+    }
+    @if (notif.Text == null && notif.Type == "Comment")
+    {
+        <p>Un admin a sters un comentariu al dumneavoastra.</p>
+    }
+    <div class="panel-footer">
+        <span class="label label-success">@notif.RequestTime</span>
+    </div>
+ </div>
+<br /> <br />
+}
