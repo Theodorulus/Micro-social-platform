@@ -141,12 +141,19 @@ namespace DAW_project.Controllers
         public ActionResult Delete(int id)
         {
             Post post = db.Posts.Find(id);
-            if (post.UserId == User.Identity.GetUserId() || User.IsInRole("Administrator"))
+            if (post.UserId == User.Identity.GetUserId())
             {
                 db.Posts.Remove(post);
                 db.SaveChanges();
                 TempData["message"] = "Postarea a fost stearsa!";
                 return RedirectToAction("Index");
+            }
+            else if (User.IsInRole("Administrator"))
+            {
+                db.Posts.Remove(post);
+                db.SaveChanges();
+                TempData["message"] = "Postarea a fost stearsa!";
+                return Redirect("/Notification/New/" + id);
             }
             else
             {
