@@ -6,9 +6,6 @@
 }
 
 
-<hr />
-<a class="btn btn-sm btn btn-primary" href="/Posts/Index">Inapoi la postari</a>
-<a class="btn btn-sm btn btn-primary" href="/Posts/New">Adauga postare</a>
 <br /> <br /> <br />
 
 <h3>@ViewBag.PostMessage</h3>
@@ -16,15 +13,22 @@
 <div class="panel panel-default">
 
     @Html.Partial("PostInfo", post)
-    
+
 </div>
 
-<a class = "btn btn-sm btn btn-warning" href="/Posts/Edit/@ViewBag.Post.PostId">Modifica postare</a>
-<br /><br />
+@if (Model.UserId == ViewBag.utilizatorCurent)
+{
+    <a class="btn btn-sm btn btn-warning" href="/Posts/Edit/@ViewBag.Post.PostId">Modifica postare</a>
+    <br /><br />
+}
+@if(Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+{
 <form method="post" action="/Posts/Delete/@ViewBag.Post.PostId">
     @Html.HttpMethodOverride(HttpVerbs.Delete)
-    <button class = "btn btn-sm btn btn-danger" type="submit">Sterge postarea</button>
+    <button class="btn btn-sm btn btn-danger" type="submit">Sterge postarea</button>
 </form>
+}
+
 
 <h3>@ViewBag.CommMessage</h3>
 
@@ -38,47 +42,56 @@
                 <div>
                     <p>@comm.Text</p>
                     <small class="pull-right label label-success">@comm.Date</small>
+                    <i class="glyphicon glyphicon-user"></i> <strong> @comm.User.UserName </strong>
                 </div>
+                @if (comm.UserId == ViewBag.utilizatorCurent)
+                {
+                    <div style="display: inline-block; float : left; margin-right: 15px">
+                        <a class="glyphicon glyphicon-pencil" href="/Comments/Edit/@comm.CommentId"></a>
+                    </div>
+                }
 
-                <div style="display: inline-block; float : left; margin-right: 15px">
-                    <a class="glyphicon glyphicon-pencil" href="/Comments/Edit/@comm.CommentId"></a>
+                @if (comm.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+                {
+                    <div style="display: inline-block; float : left">
+
+                        <form method="post" action="/Comments/Delete/@comm.CommentId">
+                            @Html.HttpMethodOverride(HttpVerbs.Delete)
+                            <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                        </form>
+                    </div>
+                }
                 </div>
-
-                <div style="display: inline-block; float : left">
-                    <form method="post" action="/Comments/Delete/@comm.CommentId">
-                        @Html.HttpMethodOverride(HttpVerbs.Delete)
-                        <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
-                    </form>
-                </div>
-
-            </div>
         </div>
         <div class="col-md-2"></div>
     </div>
     <hr />
 }
-<div class="container">
-    <div class="row">
-        <div class="col-md-2">
-        </div>
-        <div class="col-md-8">
-            <div class="panel">
-                <form method="post" action="/Comments/New">
-                    <div class="panel-body">
-                        <input type="hidden" name="PostId" value="@ViewBag.Post.PostId" />
-                        <label>Continut comentariu</label>
-                        <br />
-                        <textarea class="form-control" name="Text"></textarea>
-                        <br />
-                        <button class="btn btn-success " type="submit">Adauga comentariu</button>
-                    </div>
-                </form>
+
+@if (ViewBag.utilizatorCurent != null) // daca este un utilizator logat
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                <div class="panel">
+                    <form method="post" action="/Comments/New">
+                        <div class="panel-body">
+                            <input type="hidden" name="PostId" value="@ViewBag.Post.PostId" />
+                            <label>Continut comentariu</label>
+                            <br />
+                            <textarea class="form-control" name="Text"></textarea>
+                            <br />
+                            <button class="btn btn-success " type="submit">Adauga comentariu</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-2">
             </div>
         </div>
-        <div class="col-md-2">
-        </div>
     </div>
-</div>
-
+}
 
 

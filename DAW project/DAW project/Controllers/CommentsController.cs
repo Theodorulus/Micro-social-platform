@@ -1,4 +1,5 @@
 ﻿using DAW_project.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,15 +18,16 @@ namespace DAW_project.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult New(Comment comm)
         {
             comm.Date = DateTime.Now;
+            comm.UserId = User.Identity.GetUserId();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    comm.UserId = 1;
                     db.Comments.Add(comm);
                     db.SaveChanges();
                     return Redirect("/Posts/Show/" + comm.PostId);
@@ -43,26 +45,44 @@ namespace DAW_project.Controllers
 
         }
 
+        [Authorize]
         public ActionResult Edit(int id)
         {
             Comment comm = db.Comments.Find(id);
-            ViewBag.Comment = comm;
-            return View(comm);
+            if (comm.UserId == User.Identity.GetUserId()) //|| User.IsInRole("Administrator"))
+            {
+                ViewBag.Comment = comm;
+                return View(comm);
+            }
+            else
+            {
+                TempData["message_comm"] = "Nu puteti sa editati comentariul.";
+                return Redirect("/Posts/Show/" + comm.PostId);
+            }
         }
 
+        [Authorize]
         [HttpPut]
         public ActionResult Edit(int id, Comment requestComment)
         {
             try
             {
                 Comment comm = db.Comments.Find(id);
-                if (TryUpdateModel(comm))
+                if (comm.UserId == User.Identity.GetUserId()) //|| User.IsInRole("Administrator"))
                 {
-                    comm.Text = requestComment.Text;
-                    db.SaveChanges();
-                    TempData["message_comm"] = "Comentariul a fost modificat!";
+                    if (TryUpdateModel(comm))
+                    {
+                        comm.Text = requestComment.Text;
+                        db.SaveChanges();
+                        TempData["message_comm"] = "Comentariul a fost modificat!";
+                    }
+                    return Redirect("/Posts/Show/" + comm.PostId);
                 }
-                return Redirect("/Posts/Show/" + comm.PostId);
+                else
+                {
+                    TempData["message_comm"] = "Nu puteti sa editati comentariul.";
+                    return Redirect("/Posts/Show/" + comm.PostId);
+                }
             }
             catch (Exception e)
             {
@@ -70,14 +90,23 @@ namespace DAW_project.Controllers
             }
 
         }
+        [Authorize]
         [HttpDelete]
         public ActionResult Delete(int id)
         {
             Comment comm = db.Comments.Find(id);
-            db.Comments.Remove(comm);
-            db.SaveChanges();
-            TempData["message_comm"] = "Comentariul a fost sters!";
-            return Redirect("/Posts/Show/" + comm.PostId);
+            if (comm.UserId == User.Identity.GetUserId() || User.IsInRole("Administrator"))
+            {
+                db.Comments.Remove(comm);
+                db.SaveChanges();
+                TempData["message_comm"] = "Comentariul a fost sters!";
+                return Redirect("/Posts/Show/" + comm.PostId);
+            }
+            else
+            {
+                TempData["message_comm"] = "Nu puteti sa stergeti comentariul.";
+                return Redirect("/Posts/Show/" + comm.PostId);
+            }
         }
     }
 }
