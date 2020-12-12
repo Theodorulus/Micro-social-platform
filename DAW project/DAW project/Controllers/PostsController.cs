@@ -9,7 +9,7 @@ namespace DAW_project.Controllers
 {
     public class PostsController : Controller
     {
-        private Models.AppContext db = new Models.AppContext();
+        private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
 
         // GET: Post
         public ActionResult Index()
