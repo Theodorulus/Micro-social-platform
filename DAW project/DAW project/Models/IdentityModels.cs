@@ -1,8 +1,10 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using static DAW_project.Models.RegisterViewModel;
 
 namespace DAW_project.Models
 {
@@ -16,6 +18,12 @@ namespace DAW_project.Models
             // Add custom user claims here
             return userIdentity;
         }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public PrivacyEnum Privacy { get; set; }
+        public virtual ICollection<Comment> UserComments { get; set; }
+        public virtual ICollection<Post> UserPosts { get; set; }
+
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -26,6 +34,7 @@ namespace DAW_project.Models
             Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,DAW_project.Migrations.Configuration>("DefaultConnection"));
         }
 
+        //public DbSet<ApplicationUser> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
