@@ -1,0 +1,47 @@
+﻿@model DAW_project.Models.Post
+
+@{
+    /**/
+
+    ViewBag.Title = "New";
+}
+
+<h2>Adaugare postare noua</h2>
+
+<!--
+<form method="post" action="/Posts/New">
+    <label>La ce te gandesti?</label>
+    <textarea name="Text"></textarea>
+    <!--<label>UserId</label>
+    <input type="text" name="UserId" />
+<button type="submit">Posteaza!</button>
+</form>
+-->
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Posts"))
+{
+    @Html.ValidationSummary(false, null, new { @class = "text-danger" })
+    @Html.Label("La ce te gandesti?")
+    @Html.TextAreaFor(m => m.Text, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Text, null, new { @class = "text-danger" })
+    <br />
+    <button class="btn btn-success" type="submit">Posteaza!</button>
+}
+
+
+
+
+<!--
+
+
+<form method="post" action="/Posts/New">
+    <label>La ce te gandesti?</label>
+    <textarea name="Text"></textarea>
+    <br /> <input type="hidden" name="Date" value="@DateTime.Now" />
+    <br />
+    <label>UserId</label>
+    <input type="text" name="UserId"/>
+    <button type="submit">Posteaza!</button>
+</form>
+
+-->

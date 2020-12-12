@@ -1,0 +1,22 @@
+﻿@model DAW_project.Models.Post
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Modificare postare</h2>
+
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Posts"))
+{
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    @Html.Hidden("PostId")
+
+    @Html.Label("Ce vrei sa modifici?")
+    @Html.TextAreaFor(m => m.Text, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.Text, null, new { @class = "text-danger" })
+    <br />
+    <button class="btn btn-success" type="submit">Modifica postarea</button>
+}
