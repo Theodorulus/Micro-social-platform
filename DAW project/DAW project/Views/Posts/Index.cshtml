@@ -8,7 +8,11 @@
 
 <h2>Afisare postari</h2>
 
-<a class="btn btn-primary" href="/Posts/New"> Adauga Postare</a>
+@if(ViewBag.utilizatorCurent != null) // daca este un utilizator logat
+{ 
+    <a class="btn btn-primary" href="/Posts/New"> Adauga Postare</a>
+}
+
 
 <h3>@ViewBag.Message</h3>
 

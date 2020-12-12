@@ -1,4 +1,5 @@
 ﻿using DAW_project.Models;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace DAW_project.Controllers
 {
     public class PostsController : Controller
     {
-        private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
+        private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Post
         public ActionResult Index()
@@ -20,24 +21,28 @@ namespace DAW_project.Controllers
             {
                 ViewBag.Message = TempData["message"];
             }
+            SetAccessRights();
             return View();
         }
 
+        [Authorize]
         public ActionResult New()
         {
             Post post = new Post();
+            post.UserId = User.Identity.GetUserId();
             return View();
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult New(Post post)
         {
             post.Date = DateTime.Now;
+            post.UserId = User.Identity.GetUserId();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    post.UserId = 1;
                     db.Posts.Add(post);
                     db.SaveChanges();
                     TempData["message"] = "Postarea a fost creata cu succes!";
@@ -67,18 +72,27 @@ namespace DAW_project.Controllers
             {
                 ViewBag.CommMessage = TempData["message_comm"];
             }
+            SetAccessRights();
             return View(post);
 
         }
 
+        [Authorize]
         public ActionResult Edit(int id)
         {
-
             Post post = db.Posts.Find(id);
-
-            return View(post);
+            if (post.UserId == User.Identity.GetUserId()) //|| User.IsInRole("Administrator"))
+            {
+                return View(post);
+            }
+            else
+            {
+                TempData["message_post"] = "Nu puteti sa editati postarea.";
+                return RedirectToAction("Show/" + id);
+            }
         }
 
+        [Authorize]
         [HttpPut]
         public ActionResult Edit(int id, Post requestPost)
         {
@@ -86,21 +100,28 @@ namespace DAW_project.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                requestPost.Date = DateTime.Now;
+                    requestPost.Date = DateTime.Now;
                     Post post = db.Posts.Find(id);
-                    requestPost.UserId = 5;
-                    if (TryUpdateModel(post))
+                    if (post.UserId == User.Identity.GetUserId()) //|| User.IsInRole("Administrator"))
                     {
-                        post.Text = requestPost.Text;
-                        post.Date = requestPost.Date;
-                        post.UserId = requestPost.UserId;
-                        db.SaveChanges();
-                        TempData["message_post"] = "Postarea a fost modificata!";
-                        return RedirectToAction("Show/" + id);
+                        if (TryUpdateModel(post))
+                        {
+                            post.Text = requestPost.Text;
+                            post.Date = requestPost.Date;
+                            post.UserId = requestPost.UserId;
+                            db.SaveChanges();
+                            TempData["message_post"] = "Postarea a fost modificata!";
+                            return RedirectToAction("Show/" + id);
+                        }
+                        else
+                        {
+                            return View(requestPost);
+                        }
                     }
                     else
                     {
-                        return View(requestPost);
+                        TempData["message_post"] = "Nu puteti sa editati postarea.";
+                        return RedirectToAction("Show/" + id);
                     }
                     
                 }
@@ -115,14 +136,29 @@ namespace DAW_project.Controllers
             }
         }
 
+        [Authorize]
         [HttpDelete]
         public ActionResult Delete(int id)
         {
             Post post = db.Posts.Find(id);
-            db.Posts.Remove(post);
-            db.SaveChanges();
-            TempData["message"] = "Postarea a fost stearsa!";
-            return RedirectToAction("Index");
+            if (post.UserId == User.Identity.GetUserId() || User.IsInRole("Administrator"))
+            {
+                db.Posts.Remove(post);
+                db.SaveChanges();
+                TempData["message"] = "Postarea a fost stearsa!";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["message_post"] = "Nu puteti sa stergeti postarea.";
+                return RedirectToAction("Show/" + id);
+            }
+        }
+
+        private void SetAccessRights()
+        {
+            ViewBag.esteAdmin = User.IsInRole("Administrator");
+            ViewBag.utilizatorCurent = User.Identity.GetUserId();
         }
 
     }
