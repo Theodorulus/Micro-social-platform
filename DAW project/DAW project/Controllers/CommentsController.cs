@@ -18,7 +18,7 @@ namespace DAW_project.Controllers
             return View();
         }
 
-        [Authorize]
+        /*[Authorize]
         [HttpPost]
         public ActionResult New(Comment comm)
         {
@@ -43,7 +43,7 @@ namespace DAW_project.Controllers
                 return Redirect("/Posts/Show/" + comm.PostId);
             }
 
-        }
+        }*/
 
         [Authorize]
         public ActionResult Edit(int id)

@@ -18,12 +18,11 @@
 
 @foreach (DAW_project.Models.Post post in ViewBag.Posts)
 {
-    <div class="panel panel-default">
-
-        @Html.Partial("PostInfo", post)
-        <div class="panel-footer">
-            <a class="btn btn-sm btn btn-success" href="/Posts/Show/@post.PostId"> Afisare postare</a>
-        </div>
+<div class="panel panel-default">
+    @Html.Partial("PostInfo", post)
+    <div class="panel-footer">
+        <a class="btn btn-sm btn btn-success" href="/Posts/Show/@post.PostId"> Afisare postare</a>
     </div>
+</div>
     <br /> <br />
 }

@@ -13,6 +13,7 @@ namespace DAW_project.Controllers
     {
         public ApplicationDbContext db = ApplicationDbContext.Create();
         // GET: Notification
+        [Authorize]
         public ActionResult Index()
         {
             string id = User.Identity.GetUserId();

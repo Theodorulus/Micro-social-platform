@@ -2,7 +2,6 @@
 
 @{
     ViewBag.Title = "Show";
-    DAW_project.Models.Post post = ViewBag.Post;
 }
 
 
@@ -11,19 +10,17 @@
 <h3>@ViewBag.PostMessage</h3>
 
 <div class="panel panel-default">
-
-    @Html.Partial("PostInfo", post)
-
+    @Html.Partial("PostInfo", Model)
 </div>
 
 @if (Model.UserId == ViewBag.utilizatorCurent)
 {
-    <a class="btn btn-sm btn btn-warning" href="/Posts/Edit/@ViewBag.Post.PostId">Modifica postare</a>
+    <a class="btn btn-sm btn btn-warning" href="/Posts/Edit/@Model.PostId">Modifica postare</a>
     <br /><br />
 }
 @if(Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
 {
-<form method="post" action="/Posts/Delete/@ViewBag.Post.PostId">
+<form method="post" action="/Posts/Delete/@Model.PostId">
     @Html.HttpMethodOverride(HttpVerbs.Delete)
     <button class="btn btn-sm btn btn-danger" type="submit">Sterge postarea</button>
 </form>
@@ -33,7 +30,7 @@
 <h3>@ViewBag.CommMessage</h3>
 
 <br />
-@foreach (var comm in ViewBag.Post.Comments)
+@foreach (var comm in Model.Comments)
 {
     <div class="container">
         <div class="row">
@@ -76,12 +73,13 @@
             </div>
             <div class="col-md-8">
                 <div class="panel">
-                    <form method="post" action="/Comments/New">
+                    <form method="post" action="/Posts/Show/@Model.PostId">
                         <div class="panel-body">
-                            <input type="hidden" name="PostId" value="@ViewBag.Post.PostId" />
+                            <input type="hidden" name="PostId" value="@Model.PostId" />
                             <label>Continut comentariu</label>
                             <br />
                             <textarea class="form-control" name="Text"></textarea>
+                            @Html.ValidationMessage("Text", "", new { @class = "text-danger" })
                             <br />
                             <button class="btn btn-success " type="submit">Adauga comentariu</button>
                         </div>

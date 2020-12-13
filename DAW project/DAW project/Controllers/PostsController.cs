@@ -62,7 +62,7 @@ namespace DAW_project.Controllers
         public ActionResult Show(int id)
         {
             Post post = db.Posts.Find(id);
-            ViewBag.Post = post;
+            //ViewBag.Post = post;
             
             if (TempData.ContainsKey("message_post"))
             {
@@ -74,6 +74,42 @@ namespace DAW_project.Controllers
             }
             SetAccessRights();
             return View(post);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Show(Comment comm)
+        {
+            comm.Date = DateTime.Now;
+            comm.UserId = User.Identity.GetUserId();
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Comments.Add(comm);
+                    db.SaveChanges();
+                    return Redirect("/Posts/Show/" + comm.PostId);
+                }
+
+                else
+                {
+                    Post p = db.Posts.Find(comm.PostId);
+
+                    SetAccessRights();
+
+                    return View(p);
+                }
+
+            }
+
+            catch (Exception e)
+            {
+                Post p = db.Posts.Find(comm.PostId);
+
+                SetAccessRights();
+
+                return View(p);
+            }
 
         }
 
@@ -92,8 +128,9 @@ namespace DAW_project.Controllers
             }
         }
 
-        [Authorize]
+        
         [HttpPut]
+        [Authorize]
         public ActionResult Edit(int id, Post requestPost)
         {
             try
@@ -108,7 +145,6 @@ namespace DAW_project.Controllers
                         {
                             post.Text = requestPost.Text;
                             post.Date = requestPost.Date;
-                            post.UserId = requestPost.UserId;
                             db.SaveChanges();
                             TempData["message_post"] = "Postarea a fost modificata!";
                             return RedirectToAction("Show/" + id);
