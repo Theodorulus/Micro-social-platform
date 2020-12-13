@@ -7,12 +7,27 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 
 namespace DAW_project.Controllers
 {
-    public class UsersController : Controller
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public class NoDirectAccessAttribute : ActionFilterAttribute
     {
-        private Models.ApplicationDbContext db = new Models.ApplicationDbContext();
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (filterContext.HttpContext.Request.UrlReferrer == null ||
+                        filterContext.HttpContext.Request.Url.Host != filterContext.HttpContext.Request.UrlReferrer.Host)
+            {
+                filterContext.Result = new RedirectToRouteResult(new
+                               RouteValueDictionary(new { controller = "Home", action = "Index", area = "" }));
+            }
+        }
+    }
+
+    public class UserController : Controller
+    {
+        private readonly Models.ApplicationDbContext db = new Models.ApplicationDbContext();
 
         // GET: User
         public ActionResult Index()
@@ -22,6 +37,63 @@ namespace DAW_project.Controllers
                 ViewBag.Message = TempData["message"];
             }
             return View();
+        }
+
+        public ActionResult Show(string id = "0")
+        {
+            if (id == "0")
+            {
+                id = User.Identity.GetUserId();
+            }
+            ApplicationUser user = db.Users.Find(id);
+            if (user.Privacy == 0 || id == User.Identity.GetUserId() || User.IsInRole("Administrator"))
+            {
+                ViewBag.Posts = user.UserPosts;
+                return View(user);
+            }
+            else
+            {
+                TempData["message"] = "Profilul este privat";
+                return RedirectToAction("Index");
+            }
+        }
+        //[NoDirectAccess]
+        public ActionResult Add(string id)
+        {
+            var myId = User.Identity.GetUserId();
+            if (id == myId)
+            {
+                TempData["message"] = "Nu va puteti adauga ca prieten";
+                return RedirectToAction("Index");
+            }
+            if (db.Friendships.Where(i => i.User1.Id == id && i.User2.Id== myId || i.User2.Id == id && i.User1.Id == myId).Count() != 0)
+            {
+                TempData["message"] = "O cerere este deja in asteptare sau sunteti deja prieteni";
+                return RedirectToAction("Index");
+            }
+            Friendship friendship = new Friendship
+            {
+                User1 = db.Users.Find(myId),
+                User2 = db.Users.Find(id),
+                RequestTime = DateTime.Now,
+                Accepted = false
+            };
+
+            db.Friendships.Add(friendship);
+            db.SaveChanges();
+
+            return RedirectToAction("Show", new { id });
+        }
+        public ActionResult Friend(string id)
+        {
+            var myId = User.Identity.GetUserId();
+
+            Friendship request = db.Friendships.Where(i => i.User1.Id == id && i.User2.Id == myId).First();
+            request.Accepted = true;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Notifications");
         }
         /*
         public ActionResult New()
@@ -53,18 +125,7 @@ namespace DAW_project.Controllers
             }
 
         }
-        */
-        public ActionResult Show(string id = "0")
-        {
-            if (id == "0")
-            {
-                id = User.Identity.GetUserId();
-            }
-            ApplicationUser user = db.Users.Find(id);
-            ViewBag.ApplicationUser = user;
-            return View(user);
-        }
-        /*
+        
         public ActionResult Edit(int id)
         {
             User user = db.Users.Find(id);

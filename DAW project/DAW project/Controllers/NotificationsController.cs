@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -19,6 +20,8 @@ namespace DAW_project.Controllers
             ApplicationUser user = db.Users.Find(id);
             var notifs = user.UserNotifications;
             ViewBag.Notifications = notifs;
+            List<Friendship> requests = db.Friendships.Where(i => i.User2.Id == id).ToList();
+            ViewBag.Requests = requests;
             return View();
         }
 

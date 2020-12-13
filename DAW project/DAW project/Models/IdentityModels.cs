@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using static DAW_project.Models.RegisterViewModel;
 
 namespace DAW_project.Models
@@ -28,6 +28,14 @@ namespace DAW_project.Models
         public virtual ICollection<Notification> AdminNotifications { get; set; }
         [ForeignKey("User_Id")]
         public virtual ICollection<Notification> UserNotifications { get; set; }
+
+        //[ForeignKey("User1_Id")]
+        public virtual ICollection<Friendship> SentRequests { get; set; }
+
+        //[ForeignKey("User2_Id")]
+        public virtual ICollection<Friendship> ReceivedRequests { get; set; }
+
+        //public virtual ICollection<ApplicationUser> MyFriends { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -42,6 +50,7 @@ namespace DAW_project.Models
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Friendship> Friendships { get; set; }
 
         public static ApplicationDbContext Create()
         {

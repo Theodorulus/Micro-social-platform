@@ -7,28 +7,44 @@
 
 @foreach (DAW_project.Models.Notification notif in ViewBag.Notifications)
 {
-<div class="panel panel-default">
+    <div class="panel panel-default">
 
-    @if (notif.Text != null && notif.Type == "Post")
-    {
-        <p>Un admin a sters o postare a dumneavoastra cu urmatorul mesaj: "@notif.Text"</p>
-    }
-    @if (notif.Text == null && notif.Type == "Post")
-    {
-        <p>Un admin a sters o postare a dumneavoastra.</p>
-    }
+        @if (notif.Text != null && notif.Type == "Post")
+        {
+            <p>Un admin a sters o postare a dumneavoastra cu urmatorul mesaj: "@notif.Text"</p>
+        }
+        @if (notif.Text == null && notif.Type == "Post")
+        {
+            <p>Un admin a sters o postare a dumneavoastra.</p>
+        }
 
-    @if (notif.Text != null && notif.Type == "Comment")
-    {
-        <p>Un admin a sters un comentariu al dumneavoastra cu urmatorul mesaj: "@notif.Text"</p>
-    }
-    @if (notif.Text == null && notif.Type == "Comment")
-    {
-        <p>Un admin a sters un comentariu al dumneavoastra.</p>
-    }
-    <div class="panel-footer">
-        <span class="label label-success">@notif.RequestTime</span>
+        @if (notif.Text != null && notif.Type == "Comment")
+        {
+            <p>Un admin a sters un comentariu al dumneavoastra cu urmatorul mesaj: "@notif.Text"</p>
+        }
+        @if (notif.Text == null && notif.Type == "Comment")
+        {
+            <p>Un admin a sters un comentariu al dumneavoastra.</p>
+        }
+
+        <div class="panel-footer">
+            <span class="label label-success">@notif.RequestTime</span>
+        </div>
     </div>
- </div>
-<br /> <br />
+    <br />
+    <br />
+
 }
+
+<br />
+<div>
+    <p>Cereri de prietenie:</p>
+    <br />
+    @foreach (var request in ViewBag.Requests)
+    {
+        <p>@request.User1.FirstName @request.User1.LastName</p>
+        <a class="btn btn-sm btn btn-success" href="/User/Friend/@request.User1.Id"> Acceptare </a>
+        <br /><br />
+    }
+
+</div>

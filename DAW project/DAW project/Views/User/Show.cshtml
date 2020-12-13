@@ -1,0 +1,19 @@
+﻿@model DAW_project.Models.ApplicationUser
+
+<h2>Pagina Utilizator</h2>
+
+@Html.DisplayTextFor(m => m.FirstName)
+<br />
+@Html.DisplayTextFor(m => m.LastName)
+<br />
+<div>
+    @foreach (DAW_project.Models.Post post in ViewBag.Posts)
+    {
+        <div class="panel panel-default">
+            @Html.Partial("PostInfo", post)
+            <div class="panel-footer">
+                <a class="btn btn-sm btn btn-success" href="/Posts/Show/@post.PostId"> Afisare postare</a>
+            </div>
+        </div>
+    }
+</div>
