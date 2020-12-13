@@ -12,7 +12,7 @@
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     @Html.HttpMethodOverride(HttpVerbs.Put)
 
-    @Html.Hidden("PostId")
+    @Html.Hidden("UserId")
 
     @Html.Label("Ce vrei sa modifici?")
     @Html.TextAreaFor(m => m.Text, new { @class = "form-control" })
