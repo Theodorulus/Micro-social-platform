@@ -11,10 +11,11 @@ namespace DAW_project.Models
     {
         [Key]
         public int FriendshipId { get; set; }
-
+        //[Column(Order = 1), Key]
         //public string User1_Id { get; set; }
         public virtual ApplicationUser User1 { get; set; }
 
+        //[Column(Order = 2), Key]
         //public string User2_Id { get; set; }
         public virtual ApplicationUser User2 { get; set; }
 

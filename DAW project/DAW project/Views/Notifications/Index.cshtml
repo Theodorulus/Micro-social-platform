@@ -43,7 +43,7 @@
     @foreach (var request in ViewBag.Requests)
     {
         <p>@request.User1.FirstName @request.User1.LastName</p>
-        <a class="btn btn-sm btn btn-success" href="/User/Friend/@request.User1.Id"> Acceptare </a>
+        <a class="btn btn-sm btn btn-success" href="/User/AddFriend/@request.User1.Id"> Acceptare </a>
         <br /><br />
     }
 

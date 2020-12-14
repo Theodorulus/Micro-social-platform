@@ -3,7 +3,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
-//using System.Diagnostics;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -41,11 +41,11 @@ namespace DAW_project.Controllers
 
         public ActionResult Show(string id = "0")
         {
-            if (id == "0")
-            {
-                id = User.Identity.GetUserId();
-            }
+            ViewBag.ButtonId = id;
+            if (id == "0") { id = User.Identity.GetUserId(); }
+            string myId = User.Identity.GetUserId();
             ApplicationUser user = db.Users.Find(id);
+            ViewBag.AlreadySent = db.Friendships.Where(i => i.User1.Id ==myId && i.User2.Id == id).Count();
             if (user.Privacy == 0 || id == User.Identity.GetUserId() || User.IsInRole("Administrator"))
             {
                 ViewBag.Posts = user.UserPosts;
@@ -58,7 +58,7 @@ namespace DAW_project.Controllers
             }
         }
         //[NoDirectAccess]
-        public ActionResult Add(string id)
+        public ActionResult ReqFriend(string id)
         {
             var myId = User.Identity.GetUserId();
             if (id == myId)
@@ -84,13 +84,24 @@ namespace DAW_project.Controllers
 
             return RedirectToAction("Show", new { id });
         }
-        public ActionResult Friend(string id)
+        public ActionResult AddFriend(string id)
         {
             var myId = User.Identity.GetUserId();
 
             Friendship request = db.Friendships.Where(i => i.User1.Id == id && i.User2.Id == myId).First();
             request.Accepted = true;
 
+            db.SaveChanges();
+
+            return RedirectToAction("Index", "Notifications");
+        }
+        public ActionResult DelFriend(string id)
+        {
+            var myId = User.Identity.GetUserId();
+
+            Friendship request = db.Friendships.Where(i => i.User1.Id == myId && i.User2.Id == id).First();
+            db.Friendships.Remove(request);
+            
             db.SaveChanges();
 
             return RedirectToAction("Index", "Notifications");

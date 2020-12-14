@@ -6,6 +6,21 @@
 <br />
 @Html.DisplayTextFor(m => m.LastName)
 <br />
+@if (ViewBag.ButtonId != "0")
+{
+    if (ViewBag.AlreadySent != 1)
+    {
+        <div>
+            <a class="btn btn-sm btn btn-success" href="/User/ReqFriend/@ViewBag.ButtonId"> Adauga ca prieten</a>
+        </div>
+    }
+    else {
+        <div>
+            <a class="btn btn-sm btn btn-success" href="/User/DelFriend/@ViewBag.ButtonId"> Anuleaza Cererea</a>
+        </div>
+    }
+}
+
 <div>
     @foreach (DAW_project.Models.Post post in ViewBag.Posts)
     {
