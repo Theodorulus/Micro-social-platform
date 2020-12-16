@@ -97,6 +97,7 @@ namespace DAW_project.Controllers
             var myId = User.Identity.GetUserId();
 
             Friendship request = db.Friendships.Where(i => i.User1.Id == id && i.User2.Id == myId).FirstOrDefault();
+            if (request != null)
             request.Accepted = true;
 
             db.SaveChanges();
