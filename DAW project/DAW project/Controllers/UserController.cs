@@ -11,6 +11,7 @@ using System.Web.Routing;
 
 namespace DAW_project.Controllers
 {
+
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class NoDirectAccessAttribute : ActionFilterAttribute
     {
@@ -39,13 +40,20 @@ namespace DAW_project.Controllers
             return View();
         }
 
+        private int FindFriendship(string id1, string id2, bool accept)
+        {
+            return db.Friendships.Where(i => i.User1.Id == id1 && i.User2.Id == id2 && i.Accepted == accept).Count();
+        }
+
         public ActionResult Show(string id = "0")
         {
             ViewBag.ButtonId = id;
             if (id == "0") { id = User.Identity.GetUserId(); }
             string myId = User.Identity.GetUserId();
             ApplicationUser user = db.Users.Find(id);
-            ViewBag.AlreadySent = db.Friendships.Where(i => i.User1.Id ==myId && i.User2.Id == id).Count();
+            ViewBag.AlreadySent = FindFriendship(myId, id, false);
+            ViewBag.GotRequest = FindFriendship(id, myId, false);
+            ViewBag.AlreadyFriends = FindFriendship(myId, id, true) + FindFriendship(id, myId, true);
             if (user.Privacy == 0 || id == User.Identity.GetUserId() || User.IsInRole("Administrator"))
             {
                 ViewBag.Posts = user.UserPosts;
@@ -88,7 +96,7 @@ namespace DAW_project.Controllers
         {
             var myId = User.Identity.GetUserId();
 
-            Friendship request = db.Friendships.Where(i => i.User1.Id == id && i.User2.Id == myId).First();
+            Friendship request = db.Friendships.Where(i => i.User1.Id == id && i.User2.Id == myId).FirstOrDefault();
             request.Accepted = true;
 
             db.SaveChanges();
@@ -99,9 +107,11 @@ namespace DAW_project.Controllers
         {
             var myId = User.Identity.GetUserId();
 
-            Friendship request = db.Friendships.Where(i => i.User1.Id == myId && i.User2.Id == id).First();
-            db.Friendships.Remove(request);
-            
+            Friendship request = db.Friendships.Where(i => i.User1.Id == myId && i.User2.Id == id || i.User1.Id == id && i.User2.Id == myId).FirstOrDefault();
+            if (request != null)
+            {
+                db.Friendships.Remove(request);
+            }
             db.SaveChanges();
 
             return RedirectToAction("Index", "Notifications");
