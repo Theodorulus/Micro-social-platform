@@ -8,15 +8,31 @@
 <br />
 @if (ViewBag.ButtonId != "0")
 {
-    if (ViewBag.AlreadySent != 1)
+    if (ViewBag.AlreadySent == 1)
+    {
+        <div>
+            <a class="btn btn-sm btn btn-success" href="/User/DelFriend/@ViewBag.ButtonId"> Anuleaza Cererea</a>
+        </div>
+    }
+    else if (ViewBag.GotRequest == 1)
+    {
+        <div>
+            <a class="btn btn-sm btn btn-success" href="/User/AddFriend/@ViewBag.ButtonId"> Accepta Cererea</a>
+        </div>
+        <div>
+            <a class="btn btn-sm btn btn-failure" href="/User/DelFriend/@ViewBag.ButtonId"> Respinge Cererea</a>
+        </div>
+    }
+    else if (ViewBag.AlreadyFriends == 1)
+    {
+        <div>
+            <a class="btn btn-sm btn btn-success" href="/User/DelFriend/@ViewBag.ButtonId"> Sterge prieten</a>
+        </div>
+    }
+    else
     {
         <div>
             <a class="btn btn-sm btn btn-success" href="/User/ReqFriend/@ViewBag.ButtonId"> Adauga ca prieten</a>
-        </div>
-    }
-    else {
-        <div>
-            <a class="btn btn-sm btn btn-success" href="/User/DelFriend/@ViewBag.ButtonId"> Anuleaza Cererea</a>
         </div>
     }
 }
