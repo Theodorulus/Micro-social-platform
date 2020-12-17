@@ -5,7 +5,7 @@
 </h2>
 
 <br />
-@if (ViewBag.ButtonId != "0")
+@if (ViewBag.SamePerson != true)
 {
     if (ViewBag.AlreadySent == 1)
     {
@@ -28,15 +28,14 @@
             <a class="btn btn-sm btn btn-danger" href="/User/DelFriend/@ViewBag.ButtonId"> Sterge prieten</a>
         </div>
     }
-    else if (ViewBag.SamePerson != true)
+    else
     {
         <div>
             <a class="btn btn-sm btn btn-success" href="/User/ReqFriend/@ViewBag.ButtonId"> Adauga ca prieten</a>
         </div>
     }
 }
-
-@if (ViewBag.SamePerson == true)
+else
 {
     <a class="btn btn-primary" href="/Posts/New"> Adauga Postare</a>
 }

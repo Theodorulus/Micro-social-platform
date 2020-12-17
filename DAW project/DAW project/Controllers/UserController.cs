@@ -47,9 +47,20 @@ namespace DAW_project.Controllers
 
         public ActionResult Show(string id = "0")
         {
-            ViewBag.ButtonId = id;
-            if (id == "0") { id = User.Identity.GetUserId(); }
+            if (id == "0")
+            {
+                if (User.IsInRole("User") || User.IsInRole("Administrator"))
+                {
+                    id = User.Identity.GetUserId();
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+                
+            }
             string myId = User.Identity.GetUserId();
+            if (id == myId) { ViewBag.SamePerson = true; }
             ApplicationUser user = db.Users.Find(id);
             ViewBag.AlreadySent = FindFriendship(myId, id, false);
             ViewBag.GotRequest = FindFriendship(id, myId, false);
@@ -58,7 +69,6 @@ namespace DAW_project.Controllers
             {
                 ViewBag.Message = TempData["message"];
             }
-            if (id == myId) { ViewBag.SamePerson = true; }
             if (user.Privacy == 0 || id == User.Identity.GetUserId() || User.IsInRole("Administrator"))
             {
                 ViewBag.Posts = user.UserPosts;
