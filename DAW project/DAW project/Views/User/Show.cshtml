@@ -1,10 +1,9 @@
 ﻿@model DAW_project.Models.ApplicationUser
 
-<h2>Pagina Utilizator</h2>
+<h2>
+    @Html.DisplayTextFor(m => m.FirstName) @Html.DisplayTextFor(m => m.LastName)
+</h2>
 
-@Html.DisplayTextFor(m => m.FirstName)
-<br />
-@Html.DisplayTextFor(m => m.LastName)
 <br />
 @if (ViewBag.ButtonId != "0")
 {

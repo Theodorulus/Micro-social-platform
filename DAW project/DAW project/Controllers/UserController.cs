@@ -70,6 +70,7 @@ namespace DAW_project.Controllers
                 return RedirectToAction("Index");
             }
         }
+
         //[NoDirectAccess]
         [Authorize]
         public ActionResult ReqFriend(string id)

@@ -39,7 +39,7 @@
                 <div>
                     <p>@comm.Text</p>
                     <small class="pull-right label label-success">@comm.Date</small>
-                    <i class="glyphicon glyphicon-user"></i> <strong> @comm.User.UserName </strong>
+                    <i class="glyphicon glyphicon-user"></i> <a href="/User/Show/@Model.User.Id"><strong> @Model.User.FirstName @Model.User.LastName</strong></a>
                 </div>
                 @if (comm.UserId == ViewBag.utilizatorCurent)
                 {
