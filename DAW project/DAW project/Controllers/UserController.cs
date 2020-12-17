@@ -54,6 +54,10 @@ namespace DAW_project.Controllers
             ViewBag.AlreadySent = FindFriendship(myId, id, false);
             ViewBag.GotRequest = FindFriendship(id, myId, false);
             ViewBag.AlreadyFriends = FindFriendship(myId, id, true) + FindFriendship(id, myId, true);
+            if (TempData.ContainsKey("message"))
+            {
+                ViewBag.Message = TempData["message"];
+            }
             if (id == myId) { ViewBag.SamePerson = true; }
             if (user.Privacy == 0 || id == User.Identity.GetUserId() || User.IsInRole("Administrator"))
             {
@@ -67,6 +71,7 @@ namespace DAW_project.Controllers
             }
         }
         //[NoDirectAccess]
+        [Authorize]
         public ActionResult ReqFriend(string id)
         {
             var myId = User.Identity.GetUserId();
@@ -93,6 +98,8 @@ namespace DAW_project.Controllers
 
             return RedirectToAction("Show", new { id });
         }
+
+        [Authorize]
         public ActionResult AddFriend(string id)
         {
             var myId = User.Identity.GetUserId();
@@ -103,8 +110,11 @@ namespace DAW_project.Controllers
 
             db.SaveChanges();
 
-            return RedirectToAction("Index", "Notifications");
+            return Redirect(Request.UrlReferrer.ToString());
+            //return RedirectToAction("Index", "Notifications");
         }
+
+        [Authorize]
         public ActionResult DelFriend(string id)
         {
             var myId = User.Identity.GetUserId();
@@ -116,7 +126,8 @@ namespace DAW_project.Controllers
             }
             db.SaveChanges();
 
-            return RedirectToAction("Index", "Notifications");
+            return Redirect(Request.UrlReferrer.ToString());
+            //return RedirectToAction("Index", "Notifications");
         }
         /*
         public ActionResult New()

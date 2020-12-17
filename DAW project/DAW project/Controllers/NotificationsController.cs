@@ -48,7 +48,7 @@ namespace DAW_project.Controllers
                 {
                     db.Notifications.Add(notif);
                     db.SaveChanges();
-                    return Redirect("/Users/Show/" + notif.User_Id);
+                    return Redirect("/User/Show/" + notif.User_Id);
                 }
                 else
                 {
@@ -83,7 +83,7 @@ namespace DAW_project.Controllers
                 {
                     db.Notifications.Add(notif);
                     db.SaveChanges();
-                    return Redirect("/Users/Show/" + notif.User_Id);
+                    return Redirect("/User/Show/" + notif.User_Id);
                 }
                 else
                 {

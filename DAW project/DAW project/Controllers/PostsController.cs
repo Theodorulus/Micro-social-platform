@@ -46,7 +46,7 @@ namespace DAW_project.Controllers
                     db.Posts.Add(post);
                     db.SaveChanges();
                     TempData["message"] = "Postarea a fost creata cu succes!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Show", "User");
                 }
                 else
                 {
@@ -182,7 +182,7 @@ namespace DAW_project.Controllers
                 db.Posts.Remove(post);
                 db.SaveChanges();
                 TempData["message"] = "Postarea a fost stearsa!";
-                return RedirectToAction("Index");
+                return RedirectToAction("Show", "User");
             }
             else if (User.IsInRole("Administrator"))
             {
