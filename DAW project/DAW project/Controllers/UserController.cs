@@ -99,12 +99,17 @@ namespace DAW_project.Controllers
         {
             var myId = User.Identity.GetUserId();
 
-            Friendship request = db.Friendships.Where(i => i.User1.Id == myId && i.User2.Id == id).First();
-            db.Friendships.Remove(request);
+            Friendship request = db.Friendships.Where(i => i.User1.Id == myId && i.User2.Id == id).FirstOrDefault();
+            if(request != null)
+            {
+                db.Friendships.Remove(request);
+            }
+            
             
             db.SaveChanges();
 
             return RedirectToAction("Index", "Notifications");
+            
         }
         /*
         public ActionResult New()
