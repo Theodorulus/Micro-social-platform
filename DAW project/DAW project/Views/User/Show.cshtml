@@ -26,10 +26,10 @@
     else if (ViewBag.AlreadyFriends == 1)
     {
         <div>
-            <a class="btn btn-sm btn btn-success" href="/User/DelFriend/@ViewBag.ButtonId"> Sterge prieten</a>
+            <a class="btn btn-sm btn btn-danger" href="/User/DelFriend/@ViewBag.ButtonId"> Sterge prieten</a>
         </div>
     }
-    else
+    else if (ViewBag.SamePerson != true)
     {
         <div>
             <a class="btn btn-sm btn btn-success" href="/User/ReqFriend/@ViewBag.ButtonId"> Adauga ca prieten</a>

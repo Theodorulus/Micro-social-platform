@@ -54,6 +54,7 @@ namespace DAW_project.Controllers
             ViewBag.AlreadySent = FindFriendship(myId, id, false);
             ViewBag.GotRequest = FindFriendship(id, myId, false);
             ViewBag.AlreadyFriends = FindFriendship(myId, id, true) + FindFriendship(id, myId, true);
+            if (id == myId) { ViewBag.SamePerson = true; }
             if (user.Privacy == 0 || id == User.Identity.GetUserId() || User.IsInRole("Administrator"))
             {
                 ViewBag.Posts = user.UserPosts;
