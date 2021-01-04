@@ -2,9 +2,11 @@
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
@@ -43,6 +45,16 @@ namespace DAW_project.Controllers
         private int FindFriendship(string id1, string id2, bool accept)
         {
             return db.Friendships.Where(i => i.User1.Id == id1 && i.User2.Id == id2 && i.Accepted == accept).Count();
+        }
+
+        public ActionResult Search(string searchString)
+        {
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                ViewBag.SearchRes = db.Users.Where(s => s.FirstName.Contains(searchString) || s.LastName.Contains(searchString)).ToList();
+            }
+
+            return View();
         }
 
         public ActionResult Show(string id = "0")

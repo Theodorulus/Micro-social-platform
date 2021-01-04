@@ -267,6 +267,7 @@
     <Content Include="Views\Notifications\NewPost.cshtml" />
     <Content Include="Views\Notifications\Index.cshtml" />
     <Content Include="Views\Notifications\NewComment.cshtml" />
+    <Content Include="Views\User\Search.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

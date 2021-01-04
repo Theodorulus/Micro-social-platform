@@ -1,0 +1,23 @@
+﻿@{
+    ViewBag.Title = "Search";
+}
+
+<h2>Search</h2>
+
+<form asp-controller="User" asp-action="Search" method="get">
+    <p>
+        Cautare: <input type="text" name="SearchString">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<div>
+    @if (ViewBag.SearchRes != null)
+    {
+        foreach (DAW_project.Models.ApplicationUser user in ViewBag.SearchRes)
+        {
+        <a href="/User/Show/@user.Id"> @user.FirstName @user.LastName</a>
+        <br />
+        }
+    }
+</div>
