@@ -72,6 +72,16 @@ namespace DAW_project.Controllers
             }
             ViewBag.Posts = group.GroupPosts;
             SetAccessRights();
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+            if (group.GroupUsers.Contains(user))
+            {
+                ViewBag.esteinGrup = 1;
+            }
+            else
+            {
+                ViewBag.esteinGrup = 0;
+            }
+            
             return View(group);
         }
 
@@ -133,7 +143,7 @@ namespace DAW_project.Controllers
                 if (ModelState.IsValid)
                 {
                     Group group = db.Groups.Find(id);
-                    if (group.GroupAdmin_Id == User.Identity.GetUserId() || User.IsInRole("Administrator"))
+                    if (group.GroupAdmin_Id == User.Identity.GetUserId())// || User.IsInRole("Administrator"))
                     {
                         if (TryUpdateModel(group))
                         {
@@ -170,6 +180,14 @@ namespace DAW_project.Controllers
         public ActionResult Delete(int id)
         {
             Group group = db.Groups.Find(id);
+            if(group.GroupAdmin_Id == User.Identity.GetUserId() || User.IsInRole("Administrator"))
+            {
+                /*foreach (Post post in db.Posts.Where(p => p.Group == group))
+                {
+                    db.Posts.Remove(post);
+                }*/
+                db.Posts.RemoveRange(group.GroupPosts);
+            }
             if (group.GroupAdmin_Id == User.Identity.GetUserId())
             {
                 db.Groups.Remove(group);
@@ -192,11 +210,32 @@ namespace DAW_project.Controllers
             }
         }
 
+        [Authorize]
+        public ActionResult Join(int id)
+        {
+            Group group = db.Groups.Find(id);
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+            group.GroupUsers.Add(user);
+            db.SaveChanges();
+            TempData["group_message"] = "Acum sunteti membru in grup.";
+            return RedirectToAction("Show/" + id);
+        }
+
+        [Authorize]
+        public ActionResult Leave(int id)
+        {
+            Group group = db.Groups.Find(id);
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+            group.GroupUsers.Remove(user);
+            db.SaveChanges();
+            TempData["group_message"] = "Ati parasit grupul.";
+            return RedirectToAction("Show/" + id);
+        }
+
         public ActionResult Members(int id)
         {
             Group group = db.Groups.Find(id);
             ViewBag.Users = group.GroupUsers;
-            SetAccessRights();
             return View(group);
         }
 

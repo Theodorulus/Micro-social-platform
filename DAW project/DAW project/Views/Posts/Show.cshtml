@@ -13,19 +13,18 @@
     @Html.Partial("PostInfo", Model)
 </div>
 
-@if (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+@if ((Model.UserId == ViewBag.utilizatorCurent && Model.Group == null) || Model.UserId == ViewBag.utilizatorCurent && ViewBag.esteInGrup == 1)
 {
     <a class="btn btn-sm btn btn-warning" href="/Posts/Edit/@Model.PostId">Modifica postare</a>
     <br /><br />
 }
 @if(Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
 {
-<form method="post" action="/Posts/Delete/@Model.PostId">
-    @Html.HttpMethodOverride(HttpVerbs.Delete)
-    <button class="btn btn-sm btn btn-danger" type="submit">Sterge postarea</button>
-</form>
+    <form method="post" action="/Posts/Delete/@Model.PostId">
+        @Html.HttpMethodOverride(HttpVerbs.Delete)
+        <button class="btn btn-sm btn btn-danger" type="submit">Sterge postarea</button>
+    </form>
 }
-
 
 <h3>@ViewBag.CommMessage</h3>
 
@@ -43,7 +42,7 @@
                         <i class="glyphicon glyphicon-user"></i> <a href="/User/Show/@comm.UserId"><strong> @comm.User.FirstName @comm.User.LastName</strong></a>
                     
                 </div>
-                @if (comm.UserId == ViewBag.utilizatorCurent)
+                @if ((comm.UserId == ViewBag.utilizatorCurent && Model.Group == null) || comm.UserId == ViewBag.utilizatorCurent && ViewBag.esteInGrup == 1)
                 {
                     <div style="display: inline-block; float : left; margin-right: 15px">
                         <a class="glyphicon glyphicon-pencil" href="/Comments/Edit/@comm.CommentId"></a>
@@ -67,7 +66,7 @@
     <hr />
 }
 
-@if (ViewBag.utilizatorCurent != null) // daca este un utilizator logat
+@if ((ViewBag.utilizatorCurent != null && Model.Group == null) || ViewBag.esteInGrup == 1) // daca este un utilizator logat
 {
     <div class="container">
         <div class="row">
