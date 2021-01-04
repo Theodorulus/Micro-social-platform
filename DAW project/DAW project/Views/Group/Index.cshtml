@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Afisare grupuri</h2>
+
+@if (ViewBag.utilizatorCurent != null) // daca este un utilizator logat
+{
+    <a class="btn btn-primary" href="/Group/New"> Creaza un Grup Nou</a>
+}
+
+@foreach (DAW_project.Models.Group group in ViewBag.Groups)
+{
+    <br />
+    <a href="/Group/Show/@group.GroupId">@group.GroupName</a>
+}

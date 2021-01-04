@@ -95,12 +95,20 @@ namespace DAW_project.Controllers
         public ActionResult Delete(int id)
         {
             Comment comm = db.Comments.Find(id);
+            Post post = db.Posts.Find(comm.PostId);
             if (comm.UserId == User.Identity.GetUserId())
             {
                 db.Comments.Remove(comm);
                 db.SaveChanges();
                 TempData["message_comm"] = "Comentariul a fost sters!";
-                return Redirect("/Posts/Show/" + comm.PostId);
+                return Redirect("/Posts/Show/" + post.PostId);
+            }
+            else if (post.UserId == User.Identity.GetUserId())
+            {
+                db.Comments.Remove(comm);
+                db.SaveChanges();
+                TempData["message_comm"] = "Comentariul a fost sters!";
+                return Redirect("/Posts/Show/" + post.PostId);
             }
             else if (User.IsInRole("Administrator"))
             {

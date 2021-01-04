@@ -1,0 +1,14 @@
+﻿@model DAW_project.Models.Group
+
+@{
+    ViewBag.Title = "Members";
+}
+
+<h2>Memberi @Model.GroupName</h2>
+
+@foreach (DAW_project.Models.ApplicationUser user in ViewBag.Users)
+{
+    <a href="/User/Show/@user.Id"> @user.FirstName @user.LastName </a>
+    <br />
+}
+

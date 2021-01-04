@@ -20,7 +20,11 @@ namespace DAW_project.Models
         //[Required]
         public string UserId { get; set; }
 
+        //public int Group_GroupId { get; set; }
+
         public virtual ApplicationUser User { get; set; }
+
+        public virtual Group Group { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }

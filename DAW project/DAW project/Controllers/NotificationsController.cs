@@ -96,5 +96,40 @@ namespace DAW_project.Controllers
             }
         }
 
+        [Authorize(Roles = "Administrator")]
+        public ActionResult NewGroup(string id)
+        {
+            Notification notif = new Notification();
+            notif.User_Id = id;
+            notif.Admin_Id = User.Identity.GetUserId();
+            notif.Type = "Group";
+            return View(notif);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        [HttpPost]
+        public ActionResult NewGroup(Notification notif)
+        {
+            notif.RequestTime = DateTime.Now;
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    db.Notifications.Add(notif);
+                    db.SaveChanges();
+                    return Redirect("/User/Show/" + notif.User_Id);
+                }
+                else
+                {
+                    return View(notif);
+                }
+            }
+            catch (Exception)
+            {
+                return View(notif);
+            }
+        }
+
     }
 }

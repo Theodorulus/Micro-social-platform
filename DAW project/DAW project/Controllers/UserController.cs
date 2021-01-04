@@ -59,6 +59,7 @@ namespace DAW_project.Controllers
                 }
                 
             }
+            ViewBag.ButtonId = id;
             string myId = User.Identity.GetUserId();
             if (id == myId) { ViewBag.SamePerson = true; }
             ApplicationUser user = db.Users.Find(id);
@@ -71,7 +72,7 @@ namespace DAW_project.Controllers
             }
             if (user.Privacy == 0 || id == User.Identity.GetUserId() || User.IsInRole("Administrator"))
             {
-                ViewBag.Posts = user.UserPosts;
+                ViewBag.Posts = user.UserPosts.Where(u=>u.Group == null);
                 return View(user);
             }
             else

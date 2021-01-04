@@ -24,6 +24,7 @@ namespace DAW_project.Models
         public PrivacyEnum Privacy { get; set; }
         public virtual ICollection<Comment> UserComments { get; set; }
         public virtual ICollection<Post> UserPosts { get; set; }
+        public virtual ICollection<Group> UserGroups { get; set; }
         [ForeignKey("Admin_Id")]
         public virtual ICollection<Notification> AdminNotifications { get; set; }
         [ForeignKey("User_Id")]
@@ -51,6 +52,7 @@ namespace DAW_project.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Friendship> Friendships { get; set; }
+        public DbSet<Group> Groups { get; set; }
 
         public static ApplicationDbContext Create()
         {

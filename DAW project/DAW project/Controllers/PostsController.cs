@@ -139,7 +139,7 @@ namespace DAW_project.Controllers
                 {
                     requestPost.Date = DateTime.Now;
                     Post post = db.Posts.Find(id);
-                    if (post.UserId == User.Identity.GetUserId()) //|| User.IsInRole("Administrator"))
+                    if (post.UserId == User.Identity.GetUserId() || User.IsInRole("Administrator"))
                     {
                         if (TryUpdateModel(post))
                         {

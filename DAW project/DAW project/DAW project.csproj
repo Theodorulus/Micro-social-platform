@@ -171,6 +171,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CommentsController.cs" />
+    <Compile Include="Controllers\GroupController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
@@ -183,10 +184,15 @@
     <Compile Include="Migrations\202012121453467_Initial.designer.cs">
       <DependentUpon>202012121453467_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101041119230_Initial1.cs" />
+    <Compile Include="Migrations\202101041119230_Initial1.designer.cs">
+      <DependentUpon>202101041119230_Initial1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Friendship.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -267,6 +273,12 @@
     <Content Include="Views\Notifications\NewPost.cshtml" />
     <Content Include="Views\Notifications\Index.cshtml" />
     <Content Include="Views\Notifications\NewComment.cshtml" />
+    <Content Include="Views\Group\Index.cshtml" />
+    <Content Include="Views\Group\New.cshtml" />
+    <Content Include="Views\Group\Show.cshtml" />
+    <Content Include="Views\Group\Members.cshtml" />
+    <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Notifications\NewGroup.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -285,6 +297,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202012121453467_Initial.resx">
       <DependentUpon>202012121453467_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101041119230_Initial1.resx">
+      <DependentUpon>202101041119230_Initial1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
