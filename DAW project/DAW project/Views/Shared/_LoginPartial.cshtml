@@ -7,7 +7,7 @@
 
 <ul class="nav navbar-nav navbar-right navbarcenter">
     <li>
-        @Html.ActionLink("Profilul meu", "Show", "User", routeValues: null, htmlAttributes: new { title = "Show" })
+        @Html.ActionLink("Profilul meu", "Show", "User", new { id = 0 }, null);
     </li>
     <li>
         <a href="/Notifications" class="clear-link bell"><img src="~/Content/Bell.png" /></a>
