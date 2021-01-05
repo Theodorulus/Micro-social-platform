@@ -103,17 +103,41 @@ namespace DAW_project.Controllers
                 }
                 else
                 {
-                    Group g = db.Groups.Find(post.Group.GroupId);
+                    ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+                    if (group != null)
+                    {
+                        if (group.GroupUsers.Contains(user))
+                        {
+                            ViewBag.esteInGrup = 1;
+                        }
+                        else
+                        {
+                            ViewBag.esteInGrup = 0;
+                        }
+                    }
+                    ViewBag.Posts = group.GroupPosts;
                     SetAccessRights();
-                    return View(g);
+                    return View(group);
                 }
             }
 
             catch (Exception e)
             {
-                Group g= db.Groups.Find(post.Group.GroupId);
+                ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+                if (group != null)
+                {
+                    if (group.GroupUsers.Contains(user))
+                    {
+                        ViewBag.esteInGrup = 1;
+                    }
+                    else
+                    {
+                        ViewBag.esteInGrup = 0;
+                    }
+                }
+                ViewBag.Posts = group.GroupPosts;
                 SetAccessRights();
-                return View(g);
+                return View(group);
             }
 
         }
