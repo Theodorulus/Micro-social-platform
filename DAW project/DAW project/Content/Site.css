@@ -22,3 +22,21 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.colorBg {
+    color: #191919;
+}
+
+.colorText {
+    color: #e0e0dc;
+}
+
+.navbarcenter{
+    display:flex;
+    align-items:center;
+}
+
+.justifynav{
+    display:flex;
+    justify-content:space-between;
+}
