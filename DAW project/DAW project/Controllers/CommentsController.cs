@@ -49,7 +49,8 @@ namespace DAW_project.Controllers
         public ActionResult Edit(int id)
         {
             Comment comm = db.Comments.Find(id);
-            if (comm.UserId == User.Identity.GetUserId()) //|| User.IsInRole("Administrator"))
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+            if (comm.UserId == User.Identity.GetUserId() && comm.Post.Group == null || comm.UserId == User.Identity.GetUserId() && comm.Post.Group.GroupUsers.Contains(user)) //|| User.IsInRole("Administrator"))
             {
                 ViewBag.Comment = comm;
                 return View(comm);

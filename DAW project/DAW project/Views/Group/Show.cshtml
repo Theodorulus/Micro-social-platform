@@ -9,20 +9,33 @@
 </h2>
 
 <h3> @ViewBag.GroupMessage</h3>
+@if (Model.GroupAdmin_Id == ViewBag.utilizatorCurent)
+{
+    <a class="btn btn-sm btn btn-warning" href="/Group/Edit/@Model.GroupId">Editeaza grupul</a>
+}
 
 @if (Model.GroupAdmin_Id == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
 {
-    <a class="btn btn-sm btn btn-warning" href="/Group/Edit/@Model.GroupId">Editeaza grupul</a>
     <form method="post" action="/Group/Delete/@Model.GroupId">
         @Html.HttpMethodOverride(HttpVerbs.Delete)
         <button class="btn btn-sm btn btn-danger" type="submit">Sterge grupul</button>
     </form>
 }
 
+@if (ViewBag.utilizatorCurent != null && ViewBag.esteinGrup == 0)
+{
+    <a class="btn btn-sm btn btn-success" href="/Group/Join/@Model.GroupId">Alatura-te</a>
+}
+
+@if (ViewBag.utilizatorCurent != null && ViewBag.esteinGrup == 1)
+{
+    <a class="btn btn-sm btn btn-danger" href="/Group/Leave/@Model.GroupId">Iesi din grup</a>
+}
+
 <a class="btn btn-sm btn btn-success" href="/Group/Members/@Model.GroupId">Membri</a>
 <br />
 
-@if (ViewBag.utilizatorCurent != null) // daca este un utilizator logat
+@if (ViewBag.utilizatorCurent != null && ViewBag.esteinGrup == 1) // daca este un utilizator logat si face parte din grup
 {
     <div class="container">
         <div class="row">
@@ -54,8 +67,8 @@
         <div class="panel panel-default">
             @Html.Partial("PostInfo", post)
             <div class="panel-footer">
-            <a class="btn btn-sm btn btn-success" href="/Posts/Show/@post.PostId"> Afisare postare</a>
-             </div>
+                <a class="btn btn-sm btn btn-success" href="/Posts/Show/@post.PostId"> Afisare postare</a>
+            </div>
         </div>
     }
 </div>

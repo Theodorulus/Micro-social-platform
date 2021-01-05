@@ -73,6 +73,18 @@ namespace DAW_project.Controllers
                 ViewBag.CommMessage = TempData["message_comm"];
             }
             SetAccessRights();
+            if(post.Group != null)
+            {
+                ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+                if (post.Group.GroupUsers.Contains(user))
+                {
+                    ViewBag.esteInGrup = 1;
+                }
+                else
+                {
+                    ViewBag.esteInGrup = 0;
+                }
+            }
             return View(post);
         }
 
@@ -80,34 +92,38 @@ namespace DAW_project.Controllers
         [Authorize]
         public ActionResult Show(Comment comm)
         {
-            comm.Date = DateTime.Now;
-            comm.UserId = User.Identity.GetUserId();
-            try
+            Post p = db.Posts.Find(comm.PostId);
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+            if (p.Group == null || p.Group.GroupUsers.Contains(user))
             {
-                if (ModelState.IsValid)
+                comm.Date = DateTime.Now;
+                comm.UserId = User.Identity.GetUserId();
+                try
                 {
-                    db.Comments.Add(comm);
-                    db.SaveChanges();
-                    return Redirect("/Posts/Show/" + comm.PostId);
+                    if (ModelState.IsValid)
+                    {
+                        db.Comments.Add(comm);
+                        db.SaveChanges();
+                        return Redirect("/Posts/Show/" + comm.PostId);
+                    }
+
+                    else
+                    {
+                        SetAccessRights();
+                        return View(p);
+                    }
+
                 }
 
-                else
+                catch (Exception e)
                 {
-                    Post p = db.Posts.Find(comm.PostId);
-
                     SetAccessRights();
-
                     return View(p);
                 }
-
             }
-
-            catch (Exception e)
+            else
             {
-                Post p = db.Posts.Find(comm.PostId);
-
                 SetAccessRights();
-
                 return View(p);
             }
 
@@ -117,7 +133,8 @@ namespace DAW_project.Controllers
         public ActionResult Edit(int id)
         {
             Post post = db.Posts.Find(id);
-            if (post.UserId == User.Identity.GetUserId()) //|| User.IsInRole("Administrator"))
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+            if ((post.UserId == User.Identity.GetUserId() && post.Group == null) || post.UserId == User.Identity.GetUserId() && post.Group.GroupUsers.Contains(user)) //|| User.IsInRole("Administrator"))
             {
                 return View(post);
             }
