@@ -279,6 +279,7 @@
     <Content Include="Views\Group\Members.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
     <Content Include="Views\Notifications\NewGroup.cshtml" />
+    <Content Include="Views\User\Search.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
