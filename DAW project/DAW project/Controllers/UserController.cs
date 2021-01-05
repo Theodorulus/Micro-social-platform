@@ -141,6 +141,15 @@ namespace DAW_project.Controllers
             return RedirectToAction("Show", new { id });
         }
 
+        public ActionResult PrivacyChange(ApplicationUser user)
+        {
+            var myid = User.Identity.GetUserId();
+            ApplicationUser modif = db.Users.Find(myid);
+            modif.Privacy = user.Privacy;
+            db.SaveChanges();
+            return RedirectToAction("Show", new { myid });
+        }
+
         [Authorize]
         public ActionResult AddFriend(string id)
         {
