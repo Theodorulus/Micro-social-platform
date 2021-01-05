@@ -21,8 +21,8 @@
 /* Set width on the form input elements since they're 100% wide by default */
 .comment-area {
     width: 50%;
-    background-color: #222;
-    border-color: #222;
+    background-color: #232222;
+    border-color: #232222;
     margin: 0px;
     color: #e0e0dc;
     max-width: 35%
@@ -78,7 +78,7 @@ textarea {
     display: block;
     height: 1px;
     border: 0;
-    border-top: 1px solid #222;
+    border-top: 1px solid #232222;
     margin: 1em 0;
     padding: 0;
 }
@@ -90,7 +90,7 @@ textarea {
 .speech-bubble {
     //width: 40%;
     position: relative;
-    background: #222;
+    background: #232222;
     border-radius: .4em;
     padding: 5%;
 }
@@ -103,8 +103,6 @@ textarea {
     width: 65%;
     padding: 1%;
 }
-
-
 
 .prieten {
     font-size: 30px;
