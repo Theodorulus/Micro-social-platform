@@ -9,65 +9,73 @@
 {
     if (ViewBag.AlreadySent == 1)
     {
-        <div class="go-right">
-            <a class="btn btn btn-primary" href="/User/DelFriend/@ViewBag.ButtonId"> Anuleaza Cererea</a>
+        <div>
+            <a class="btn btn-sm btn btn-primary" href="/User/DelFriend/@ViewBag.ButtonId"> Anuleaza Cererea</a>
         </div>
     }
     else if (ViewBag.GotRequest == 1)
     {
         <div class="go-right">
-            <a class="btn btn btn-primary" href="/User/AddFriend/@ViewBag.ButtonId"> Accepta Cererea</a>
+            <a class="btn btn-sm btn btn-primary" href="/User/AddFriend/@ViewBag.ButtonId"> Accepta Cererea</a>
         </div>
         <div class="go-right">
-            <a class="btn btn btn-danger" href="/User/DelFriend/@ViewBag.ButtonId"> Respinge Cererea</a>
+            <a class="btn btn-sm btn btn-danger" href="/User/DelFriend/@ViewBag.ButtonId"> Respinge Cererea</a>
         </div>
     }
     else if (ViewBag.AlreadyFriends == 1)
     {
-        <div class="go-right">
-            <a class="btn btn btn-danger " href="/User/DelFriend/@ViewBag.ButtonId"> Sterge prieten</a>
+        <div>
+            <a class="btn btn-sm btn btn-danger" href="/User/DelFriend/@ViewBag.ButtonId"> Sterge prieten</a>
         </div>
     }
     else
     {
-        <div class="go-right">
-            <a class="btn btn btn-primary" href="/User/ReqFriend/@ViewBag.ButtonId"> Adauga ca prieten</a>
+        <div>
+            <a class="btn btn-sm btn btn-primary" href="/User/ReqFriend/@ViewBag.ButtonId"> Adauga ca prieten</a>
         </div>
     }
 }
 else
 {
-    <div class="go-right">
-        <a class="btn btn-primary" href="/Posts/New"> Adauga Postare</a>
-    </div>
-   
-}
-<div class="go-right">
-    <a class="btn btn-primary" href="/User/Friends/@Model.Id">Lista Prieteni</a>
-</div>
-
-        <h3>@ViewBag.Message</h3>
-
-        <div>
-            @foreach (DAW_project.Models.Post post in ViewBag.Posts)
-            {
-                <div class="panel panel-default">
-                    @Html.Partial("PostInfo", post)
-
-                    @if (post.Comments.Count() > 0)
-                    {
-                        <div class="panel-footer">
-                            @if (post.Comments.Count() > 1)
-                            {
-                                <a href="/Posts/Show/@post.PostId#comments" class="clear-link">@post.Comments.Count() comentarii</a>
-                            }
-
-                            @if (post.Comments.Count() == 1)
-                            {
-                                <a href="/Posts/Show/@post.PostId#comments" class="clear-link">1 comentariu</a>
-                            }
-                        </div>
-                    }
+    <a class="btn btn-primary" href="/Posts/New"> Adauga Postare</a>
+    <div>
+        @using (Html.BeginForm("PrivacyChange", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.Privacy, new SelectList(Enum.GetValues(typeof(DAW_project.Models.RegisterViewModel.PrivacyEnum))),
+                 new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" class="btn btn-default" value="Modifica" />
                 </div>
-            }
-        </div>
+            </div>
+        }
+    </div>
+}
+
+<h3>@ViewBag.Message</h3>
+
+<div>
+    @foreach (DAW_project.Models.Post post in ViewBag.Posts)
+    {
+    <div class="panel panel-default">
+        @Html.Partial("PostInfo", post)
+
+        @if (post.Comments.Count() > 0)
+        {
+            <div class="panel-footer">
+                @if (post.Comments.Count() > 1)
+                {
+                    <a href="/Posts/Show/@post.PostId#comments" class="clear-link">@post.Comments.Count() comentarii</a>
+                }
+
+                @if (post.Comments.Count() == 1)
+                {
+                    <a href="/Posts/Show/@post.PostId#comments" class="clear-link">1 comentariu</a>
+                }
+            </div>
+        }
+    </div>
+    }
+</div>
