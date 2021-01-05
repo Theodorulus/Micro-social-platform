@@ -57,6 +57,24 @@ namespace DAW_project.Controllers
             return View();
         }
 
+        public ActionResult Friends(string id="0")
+        {
+            if (id == "0")
+            {
+                if (User.IsInRole("User") || User.IsInRole("Administrator"))
+                {
+                    id = User.Identity.GetUserId();
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Account");
+                }
+            }
+            ViewBag.FriendsUser1 = db.Friendships.Where(u => u.User1.Id == id).ToList();
+            ViewBag.FriendsUser2 = db.Friendships.Where(u => u.User2.Id == id).ToList();
+            return View();
+        }
+
         public ActionResult Show(string id = "0")
         {
             if (id == "0")

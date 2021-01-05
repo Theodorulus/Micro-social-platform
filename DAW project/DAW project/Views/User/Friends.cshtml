@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Friends";
+}
+
+<h2>Prieteni</h2>
+
+<div>
+    @if (ViewBag.FriendsUser1 != null)
+    {
+        foreach (DAW_project.Models.Friendship friendship in ViewBag.FriendsUser1)
+        {
+            <a class="colorText" href="/User/Show/@friendship.User2.Id"> @friendship.User2.FirstName @friendship.User2.LastName</a>
+            <br />
+        }
+    }
+    @if (ViewBag.FriendsUser2 != null)
+    {
+        foreach (DAW_project.Models.Friendship friendship in ViewBag.FriendsUser2)
+        {
+            <a class="colorText" href="/User/Show/@friendship.User1.Id"> @friendship.User1.FirstName @friendship.User1.LastName</a>
+            <br />
+        }
+    }
+</div>
