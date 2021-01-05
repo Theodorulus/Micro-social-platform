@@ -19,11 +19,22 @@
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
+.comment-area {
+    width: 50%;
+    background-color: #222;
+    border-color: #222;
+    margin: 0px;
+    color: #e0e0dc;
+    max-width: 35%
+}
+
 input,
 select,
 textarea {
-    max-width: 35%;
+    max-width: 100%;
 }
+
+
 
 .colorBg {
     color: #191919;
@@ -93,13 +104,7 @@ textarea {
     padding: 1%;
 }
 
-.comment-area {
-    widht: 50%;
-    background-color: #222;
-    border-color: #222;
-    margin: 0px;
-    color: #e0e0dc;
-}
+
 
 .prieten {
     font-size: 30px;
@@ -115,4 +120,13 @@ textarea {
 
 .padd {
     padding-bottom: 1%;
+}
+
+.search {
+    background-color: #191919;
+    border: 0px;
+    height: 30px;
+    padding-left: 5%;
+    border-radius: .4em;
+    color: #e0e0dc;
 }

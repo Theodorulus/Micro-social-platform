@@ -19,9 +19,8 @@
                 </button>
                 @Html.ActionLink("Postari", "Index", "Posts", new { area = "" }, new { @class = "navbar-brand" })
                 @Html.ActionLink("Grupuri", "Index", "Group", new { area = "" }, new { @class = "navbar-brand" })
-                @Html.ActionLink("Prieteni", "Friends", "User", new { area = "" }, new { @class = "navbar-brand" })
-                <form class="navbar-text navbarcenter" asp-controller="User" asp-action="Search" method="get" action="/User/Search">
-                    <input type="text" name="SearchString" , placeholder="Cauta utilizatori">
+                <form class="navbar-text navbarcenter " asp-controller="User" asp-action="Search" method="get" action="/User/Search">
+                    <input type="text" name="SearchString" placeholder="Cauta utilizatori" class="search">
                     <input type="image" alt="Submit" src="~/Content/lupa.png" style="padding-left:2%" />
                 </form>
             </div>

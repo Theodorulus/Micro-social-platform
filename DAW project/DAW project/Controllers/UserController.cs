@@ -72,7 +72,8 @@ namespace DAW_project.Controllers
             }
             ViewBag.FriendsUser1 = db.Friendships.Where(u => u.User1.Id == id).ToList();
             ViewBag.FriendsUser2 = db.Friendships.Where(u => u.User2.Id == id).ToList();
-            return View();
+            ApplicationUser user = db.Users.Find(id);
+            return View(user);
         }
 
         public ActionResult Show(string id = "0")

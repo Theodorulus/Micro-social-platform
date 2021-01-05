@@ -1,16 +1,16 @@
-﻿
+﻿@model DAW_project.Models.ApplicationUser
 @{
     ViewBag.Title = "Friends";
 }
 
-<h2>Prieteni</h2>
+<h2>Prietenii lui <a href="/User/Show/@Model.Id" class="clear-link">@Model.FirstName @Model.LastName</h2></a>
 
 <div>
     @if (ViewBag.FriendsUser1 != null)
     {
         foreach (DAW_project.Models.Friendship friendship in ViewBag.FriendsUser1)
         {
-            <a class="colorText" href="/User/Show/@friendship.User2.Id"> @friendship.User2.FirstName @friendship.User2.LastName</a>
+            <a class="colorText membri" href="/User/Show/@friendship.User2.Id"> @friendship.User2.FirstName @friendship.User2.LastName</a>
             <br />
         }
     }
@@ -18,7 +18,7 @@
     {
         foreach (DAW_project.Models.Friendship friendship in ViewBag.FriendsUser2)
         {
-            <a class="colorText" href="/User/Show/@friendship.User1.Id"> @friendship.User1.FirstName @friendship.User1.LastName</a>
+            <a class="colorText membri" href="/User/Show/@friendship.User1.Id"> @friendship.User1.FirstName @friendship.User1.LastName</a>
             <br />
         }
     }

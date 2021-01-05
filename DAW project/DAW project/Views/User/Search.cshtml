@@ -4,12 +4,14 @@
 
 <h2>Rezultatul cautarii</h2>
 
+<hr class="linie-footer"/> 
+
 <div>
     @if (ViewBag.SearchRes != null)
     {
         foreach (DAW_project.Models.ApplicationUser user in ViewBag.SearchRes)
         {
-        <a class="colorText" href="/User/Show/@user.Id"> @user.FirstName @user.LastName</a>
+            <a class="colorText membri" href="/User/Show/@user.Id"> @user.FirstName @user.LastName</a>
         <br />
         }
     }
