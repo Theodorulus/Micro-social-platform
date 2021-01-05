@@ -120,6 +120,11 @@ textarea {
     padding-bottom: 1%;
 }
 
+.paddd {
+    padding-top: 1%;
+}
+
+
 .search {
     background-color: #191919;
     border: 0px;
@@ -127,4 +132,18 @@ textarea {
     padding-left: 5%;
     border-radius: .4em;
     color: #e0e0dc;
+}
+
+.ddwn {
+    background-color: #222;
+    color: #e0e0dc;
+    font-size: 15px;
+    padding: 0.5% 0.5% 0.8% 0.5%;
+    //padding: 10%;
+    border-radius: .4em;
+    border: 0;
+}
+
+.bell {
+    padding: 1px;
 }

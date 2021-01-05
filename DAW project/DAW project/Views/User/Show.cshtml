@@ -9,71 +9,81 @@
 {
     if (ViewBag.AlreadySent == 1)
     {
-        <div>
-            <a class="btn btn-sm btn btn-primary" href="/User/DelFriend/@ViewBag.ButtonId"> Anuleaza Cererea</a>
+        <div class="go-right">
+            <a class="btn btn-primary" href="/User/DelFriend/@ViewBag.ButtonId"> Anuleaza Cererea</a>
         </div>
     }
     else if (ViewBag.GotRequest == 1)
     {
         <div class="go-right">
-            <a class="btn btn-sm btn btn-primary" href="/User/AddFriend/@ViewBag.ButtonId"> Accepta Cererea</a>
+            <a class="btn btn-primary" href="/User/AddFriend/@ViewBag.ButtonId"> Accepta Cererea</a>
         </div>
         <div class="go-right">
-            <a class="btn btn-sm btn btn-danger" href="/User/DelFriend/@ViewBag.ButtonId"> Respinge Cererea</a>
+            <a class="btn btn-danger" href="/User/DelFriend/@ViewBag.ButtonId"> Respinge Cererea</a>
         </div>
     }
     else if (ViewBag.AlreadyFriends == 1)
     {
-        <div>
-            <a class="btn btn-sm btn btn-danger" href="/User/DelFriend/@ViewBag.ButtonId"> Sterge prieten</a>
+        <div class="go-right">
+            <a class="btn btn-danger" href="/User/DelFriend/@ViewBag.ButtonId"> Sterge prieten</a>
         </div>
     }
     else
     {
-        <div>
-            <a class="btn btn-sm btn btn-primary" href="/User/ReqFriend/@ViewBag.ButtonId"> Adauga ca prieten</a>
+        <div class="go-right">
+            <a class="btn btn-primary" href="/User/ReqFriend/@ViewBag.ButtonId"> Adauga ca prieten</a>
         </div>
     }
+    <div class="go-right">
+        <a class="btn btn-primary" href="/User/Friends/@ViewBag.ButtonId"> Lista prieteni</a>
+    </div>
 }
 else
 {
-    <a class="btn btn-primary" href="/Posts/New"> Adauga Postare</a>
-    <div style="padding-top:1%">
+    <div class="go-right">
+        <a class="btn btn-primary" href="/Posts/New"> Adauga Postare</a>
+    </div>
+    <div class="go-right">
+        <a class="btn btn-primary" href="/User/Friends/@ViewBag.ButtonId"> Lista prieteni</a>
+    </div>
+    <div class="paddd">
         @using (Html.BeginForm("PrivacyChange", "User", FormMethod.Post, new { @class = "", role = "form" }))
         {
-            <div class="">
+            <div class="go-right ddwn">
                 @Html.DropDownListFor(m => m.Privacy, new SelectList(Enum.GetValues(typeof(DAW_project.Models.RegisterViewModel.PrivacyEnum))),
-                 new { @class = "" })
+                 new { @class = "ddwn" })
             </div>
-            <div class="">
-                <input type="submit" class="" value="Modifica" />          
+            <div class="go-right">
+                <input type="submit" class="btn btn-primary" value="Modifica" />
             </div>
         }
     </div>
 }
+
+
 
 <h3>@ViewBag.Message</h3>
 
 <div>
     @foreach (DAW_project.Models.Post post in ViewBag.Posts)
     {
-    <div class="panel panel-default">
-        @Html.Partial("PostInfo", post)
+        <div class="panel panel-default">
+            @Html.Partial("PostInfo", post)
 
-        @if (post.Comments.Count() > 0)
-        {
-            <div class="panel-footer">
-                @if (post.Comments.Count() > 1)
-                {
-                    <a href="/Posts/Show/@post.PostId#comments" class="clear-link">@post.Comments.Count() comentarii</a>
-                }
+            @if (post.Comments.Count() > 0)
+            {
+                <div class="panel-footer">
+                    @if (post.Comments.Count() > 1)
+                    {
+                        <a href="/Posts/Show/@post.PostId#comments" class="clear-link">@post.Comments.Count() comentarii</a>
+                    }
 
-                @if (post.Comments.Count() == 1)
-                {
-                    <a href="/Posts/Show/@post.PostId#comments" class="clear-link">1 comentariu</a>
-                }
-            </div>
-        }
-    </div>
+                    @if (post.Comments.Count() == 1)
+                    {
+                        <a href="/Posts/Show/@post.PostId#comments" class="clear-link">1 comentariu</a>
+                    }
+                </div>
+            }
+        </div>
     }
 </div>
