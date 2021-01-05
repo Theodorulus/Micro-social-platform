@@ -9,55 +9,58 @@
 </h2>
 
 <h3> @ViewBag.GroupMessage</h3>
-@if (Model.GroupAdmin_Id == ViewBag.utilizatorCurent)
-{
-    <a class="btn btn-sm btn btn-warning" href="/Group/Edit/@Model.GroupId">Editeaza grupul</a>
-}
 
-@if (Model.GroupAdmin_Id == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
-{
-    <form method="post" action="/Group/Delete/@Model.GroupId">
-        @Html.HttpMethodOverride(HttpVerbs.Delete)
-        <button class="btn btn-sm btn btn-danger" type="submit">Sterge grupul</button>
-    </form>
-}
+<div class="padd">
 
-@if (ViewBag.utilizatorCurent != null && ViewBag.esteinGrup == 0)
-{
-    <a class="btn btn-sm btn btn-success" href="/Group/Join/@Model.GroupId">Alatura-te</a>
-}
+    @if (Model.GroupAdmin_Id == ViewBag.utilizatorCurent)
+    {
+        <div class="go-right">
+            <a class="btn btn-sm btn btn-primary" href="/Group/Edit/@Model.GroupId">Editeaza numele grupului</a>
+        </div>
+    }
 
-@if (ViewBag.utilizatorCurent != null && ViewBag.esteinGrup == 1)
-{
-    <a class="btn btn-sm btn btn-danger" href="/Group/Leave/@Model.GroupId">Iesi din grup</a>
-}
-
-<a class="btn btn-sm btn btn-success" href="/Group/Members/@Model.GroupId">Membri</a>
+    @if (Model.GroupAdmin_Id == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+    {
+        <div class="go-right">
+            <form method="post" action="/Group/Delete/@Model.GroupId">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="btn btn-sm btn btn-danger" type="submit">Sterge grupul</button>
+            </form>
+        </div>
+        <br />
+    }
+</div>
+<div class="pad">
+    @if (ViewBag.utilizatorCurent != null && ViewBag.esteinGrup == 0)
+    {
+        <div class="go-right">
+            <a class="btn btn-sm btn btn-primary" href="/Group/Join/@Model.GroupId">Alatura-te</a>
+        </div>
+    }
+    @if (ViewBag.utilizatorCurent != null && ViewBag.esteinGrup == 1)
+    {
+        <div class="go-right">
+            <a class="btn btn-sm btn btn-primary" href="/Group/Leave/@Model.GroupId">Iesi din grup</a>
+        </div>
+    }
+    <div class="go-right">
+        <a class="btn btn-sm btn btn-primary " href="/Group/Members/@Model.GroupId">Membri</a>
+    </div>
+</div>
 <br />
 
 @if (ViewBag.utilizatorCurent != null && ViewBag.esteinGrup == 1) // daca este un utilizator logat si face parte din grup
 {
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-8">
-                <div class="panel">
-                    <form method="post" action="/Group/Show/@Model.GroupId">
-                        <div class="panel-body">
-                            <label>La ce te gandesti?</label>
-                            <br />
-                            <textarea class="form-control" name="Text"></textarea>
-                            @Html.ValidationMessage("Text", "", new { @class = "text-danger" })
-                            <br />
-                            <button class="btn btn-success " type="submit">Adauga postare</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-md-2">
-            </div>
-        </div>
+    <div class="padd">
+        <form method="post" action="/Group/Show/@Model.GroupId">
+
+            <input type="hidden" name="PostId" value="@Model.GroupId" />
+            <label>Vrei sa postezi in grup?</label>
+            <textarea class="form-control comment-area" name="Text"></textarea>
+            @Html.ValidationMessage("Text", "", new { @class = "text-danger" })
+            <br />
+            <button class="btn btn-primary" type="submit">Adauga postare</button>
+        </form>
     </div>
 }
 
@@ -66,9 +69,20 @@
     {
         <div class="panel panel-default">
             @Html.Partial("PostInfo", post)
-            <div class="panel-footer">
-                <a class="btn btn-sm btn btn-success" href="/Posts/Show/@post.PostId"> Afisare postare</a>
-            </div>
+            @if (post.Comments.Count() > 0)
+            {
+                <div class="panel-footer">
+                    @if (post.Comments.Count() > 1)
+                    {
+                        <a href="/Posts/Show/@post.PostId#comments" class="clear-link">@post.Comments.Count() comentarii</a>
+                    }
+
+                    @if (post.Comments.Count() == 1)
+                    {
+                        <a href="/Posts/Show/@post.PostId#comments" class="clear-link">1 comentariu</a>
+                    }
+                </div>
+            }
         </div>
     }
 </div>

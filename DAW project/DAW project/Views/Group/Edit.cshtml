@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Modifica grupul</h2>
+<h2>Cum vrei sa modifici numele grupului?</h2>
 
 @using (Html.BeginForm(actionName: "Edit", controllerName: "Group"))
 {
@@ -12,10 +12,8 @@
     @Html.HttpMethodOverride(HttpVerbs.Put)
 
     @Html.Hidden("GroupAdmin_Id")
-
-    @Html.Label("Ce vrei sa modifici?")
-    @Html.TextAreaFor(m => m.GroupName, new { @class = "form-control" })
+    @Html.TextAreaFor(m => m.GroupName, new { @class = "form-control comment-area" })
     @Html.ValidationMessageFor(m => m.GroupName, null, new { @class = "text-danger" })
     <br />
-    <button class="btn btn-success" type="submit">Modifica grupul</button>
+    <button class="btn btn-primary" type="submit">Modifica grupul</button>
 }

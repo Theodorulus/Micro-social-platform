@@ -4,7 +4,7 @@
     ViewBag.Title = "Edit";
 }
 
-<h2>Modificare postare</h2>
+<h2>Ce modificari vrei sa faci?</h2>
 
 
 @using (Html.BeginForm(actionName: "Edit", controllerName: "Posts"))
@@ -13,10 +13,9 @@
     @Html.HttpMethodOverride(HttpVerbs.Put)
 
     @Html.Hidden("UserId")
-
-    @Html.Label("Ce vrei sa modifici?")
-    @Html.TextAreaFor(m => m.Text, new { @class = "form-control" })
+    
+    @Html.TextAreaFor(m => m.Text, new { @class = "form-control comment-area" })
     @Html.ValidationMessageFor(m => m.Text, null, new { @class = "text-danger" })
     <br />
-    <button class="btn btn-success" type="submit">Modifica postarea</button>
+    <button class="btn btn-primary" type="submit">Modifica postarea</button>
 }

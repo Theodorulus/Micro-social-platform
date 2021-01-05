@@ -1,15 +1,15 @@
 ﻿@model DAW_project.Models.Post
 
 @{
-                /**/
+    /**/
 
-                ViewBag.Title = "Index";
+    ViewBag.Title = "Index";
 }
 
-<h2>Afisare postari</h2>
+<h2>Postarile Utilizatorilor</h2>
 
-@if(ViewBag.utilizatorCurent != null) // daca este un utilizator logat
-{ 
+@if (ViewBag.utilizatorCurent != null) // daca este un utilizator logat
+{
     <a class="btn btn-primary" href="/Posts/New"> Adauga Postare</a>
 }
 
@@ -18,11 +18,26 @@
 
 @foreach (DAW_project.Models.Post post in ViewBag.Posts)
 {
-<div class="panel panel-default">
-    @Html.Partial("PostInfo", post)
-    <div class="panel-footer">
-        <a class="btn btn-sm btn btn-success" href="/Posts/Show/@post.PostId"> Afisare postare</a>
-    </div>
-</div>
-    <br /> <br />
+    if (post.User.Privacy == DAW_project.Models.RegisterViewModel.PrivacyEnum.Public || (post.User.Privacy == DAW_project.Models.RegisterViewModel.PrivacyEnum.Private && post.UserId == ViewBag.UtilizatorCurent))
+    {
+        <div class="panel panel-default">
+            @Html.Partial("PostInfo", post)
+            @if (post.Comments.Count() > 0)
+            {
+                <div class="panel-footer">
+                    @if (post.Comments.Count() > 1)
+                    {
+                        <a href="/Posts/Show/@post.PostId#comments" class="clear-link">@post.Comments.Count() comentarii</a>
+                    }
+
+                    @if (post.Comments.Count() == 1)
+                    {
+                        <a href="/Posts/Show/@post.PostId#comments" class="clear-link">1 comentariu</a>
+                    }
+                </div>
+            }
+
+        </div>
+        <br /> <br />
+    }
 }

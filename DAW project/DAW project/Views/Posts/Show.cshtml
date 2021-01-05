@@ -11,86 +11,79 @@
 
 <div class="panel panel-default">
     @Html.Partial("PostInfo", Model)
+    @if (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+    {
+        <div class="panel-footer">
+            @if ((Model.UserId == ViewBag.utilizatorCurent && Model.Group == null) || Model.UserId == ViewBag.utilizatorCurent && ViewBag.esteInGrup == 1)
+            {
+                <a class="btn btn-sm btn btn-primary" href="/Posts/Edit/@Model.PostId">Modifica postarea</a>
+            }
+            @if (Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
+            {
+                <form method="post" action="/Posts/Delete/@Model.PostId" class="go-right">
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button class="btn btn-sm btn btn-danger" type="submit">Sterge postarea</button>
+                </form>
+            }
+        </div>
+    }
 </div>
 
-@if ((Model.UserId == ViewBag.utilizatorCurent && Model.Group == null) || Model.UserId == ViewBag.utilizatorCurent && ViewBag.esteInGrup == 1)
-{
-    <a class="btn btn-sm btn btn-warning" href="/Posts/Edit/@Model.PostId">Modifica postare</a>
-    <br /><br />
-}
-@if(Model.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin)
-{
-    <form method="post" action="/Posts/Delete/@Model.PostId">
-        @Html.HttpMethodOverride(HttpVerbs.Delete)
-        <button class="btn btn-sm btn btn-danger" type="submit">Sterge postarea</button>
-    </form>
-}
+
 
 <h3>@ViewBag.CommMessage</h3>
 
 <br />
 @foreach (var comm in Model.Comments)
 {
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2"></div>
-            <div class="col-md-8">
-                <div>
-                    <p>@comm.Text</p>
-                    <small class="pull-right label label-success">@comm.Date</small>
-                    
-                        <i class="glyphicon glyphicon-user"></i> <a href="/User/Show/@comm.UserId"><strong> @comm.User.FirstName @comm.User.LastName</strong></a>
-                    
-                </div>
-                @if ((comm.UserId == ViewBag.utilizatorCurent && Model.Group == null) || comm.UserId == ViewBag.utilizatorCurent && ViewBag.esteInGrup == 1)
-                {
-                    <div style="display: inline-block; float : left; margin-right: 15px">
-                        <a class="glyphicon glyphicon-pencil" href="/Comments/Edit/@comm.CommentId"></a>
-                    </div>
-                }
+<div id="comments" class="panel-comment panel ">
+    <div class="speech-bubble">
+        <a href="/User/Show/@comm.UserId"><i class="glyphicon glyphicon-user"></i> <strong class="clear-link "> @comm.User.FirstName @comm.User.LastName</strong></a>
+        <span class=" date-label">@comm.Date.ToString("dd.MM.yyyy") la @comm.Date.ToString("HH:mm")</span>
+        <div style="padding-top: 2%">@comm.Text</div>
 
-                @if (comm.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin || ViewBag.utilizatorCurent == Model.UserId)
-                {
-                    <div style="display: inline-block; float : left">
 
-                        <form method="post" action="/Comments/Delete/@comm.CommentId">
-                            @Html.HttpMethodOverride(HttpVerbs.Delete)
-                            <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
-                        </form>
-                    </div>
-                }
-                </div>
-        </div>
-        <div class="col-md-2"></div>
+
     </div>
-    <hr />
+    @if(comm.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin || ViewBag.utilizatorCurent == Model.UserId)
+    {
+    <div class="panel-footer">
+        @if ((comm.UserId == ViewBag.utilizatorCurent && Model.Group == null) || comm.UserId == ViewBag.utilizatorCurent && ViewBag.esteInGrup == 1)
+        {
+            <div style="display: inline-block; margin-right: 15px">
+                <a class="glyphicon glyphicon-pencil" href="/Comments/Edit/@comm.CommentId"></a>
+            </div>
+        }
+
+
+        @if (comm.UserId == ViewBag.utilizatorCurent || ViewBag.esteAdmin || ViewBag.utilizatorCurent == Model.UserId)
+        {
+            <div style="display: inline-block">
+
+                <form method="post" action="/Comments/Delete/@comm.CommentId">
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button class="glyphicon glyphicon-trash" style="border: none; background: transparent" type="submit"></button>
+                </form>
+            </div>
+        }
+    </div>
+    }
+    
+</div>
+    <hr class="linie-footer" />
 }
 
 @if ((ViewBag.utilizatorCurent != null && Model.Group == null) || ViewBag.esteInGrup == 1) // daca este un utilizator logat
 {
-    <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-8">
-                <div class="panel">
                     <form method="post" action="/Posts/Show/@Model.PostId">
-                        <div class="panel-body">
+                        
                             <input type="hidden" name="PostId" value="@Model.PostId" />
-                            <label>Continut comentariu</label>
-                            <br />
-                            <textarea class="form-control" name="Text"></textarea>
+                            <textarea class="form-control comment-area" name="Text"></textarea>
                             @Html.ValidationMessage("Text", "", new { @class = "text-danger" })
                             <br />
-                            <button class="btn btn-success " type="submit">Adauga comentariu</button>
-                        </div>
+                            <button class="btn btn-primary" type="submit">Adauga comentariu</button>
                     </form>
-                </div>
-            </div>
-            <div class="col-md-2">
-            </div>
-        </div>
-    </div>
+
 }
 
 

@@ -6,7 +6,7 @@
     ViewBag.Title = "New";
 }
 
-<h2>Adaugare postare noua</h2>
+<h2>Ce vrei sa postezi?</h2>
 
 <!--
 <form method="post" action="/Posts/New">
@@ -21,11 +21,10 @@
 @using (Html.BeginForm(actionName: "New", controllerName: "Posts"))
 {
     @Html.ValidationSummary(false, null, new { @class = "text-danger" })
-    @Html.Label("La ce te gandesti?")
-    @Html.TextAreaFor(m => m.Text, new { @class = "form-control" })
+    @Html.TextAreaFor(m => m.Text, new { @class = "form-control comment-area" })
     @Html.ValidationMessageFor(m => m.Text, null, new { @class = "text-danger" })
     <br />
-    <button class="btn btn-success" type="submit">Posteaza!</button>
+    <button class="btn btn-primary" type="submit">Posteaza!</button>
 }
 
 

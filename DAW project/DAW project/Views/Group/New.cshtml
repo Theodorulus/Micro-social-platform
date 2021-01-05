@@ -4,14 +4,13 @@
     ViewBag.Title = "New";
 }
 
-<h2>New Group</h2>
+<h2>Cum vrei sa se numeasca grupul?</h2>
 
 @using (Html.BeginForm(actionName: "New", controllerName: "Group"))
 {
     @Html.ValidationSummary(false, null, new { @class = "text-danger" })
-    @Html.Label("Cum vrei sa se numeasca grupul?")
-    @Html.TextBoxFor(m => m.GroupName, new { @class = "form-control" })
+    @Html.TextBoxFor(m => m.GroupName, new { @class = "form-control comment-area" })
     @Html.ValidationMessageFor(m => m.GroupName, null, new { @class = "text-danger" })
     <br />
-    <button class="btn btn-success" type="submit">Posteaza!</button>
+    <button class="btn btn-primary" type="submit">Creaza</button>
 }

@@ -1,10 +1,10 @@
-﻿
-
+﻿<div class="panel-heading">
+    <a href="/User/Show/@Model.User.Id"><i class="glyphicon glyphicon-user"></i><strong class="clear-link"> @Model.User.FirstName @Model.User.LastName</strong></a>
+    <br />
+    <a href="/Posts/Show/@Model.PostId"><span class=" date-label">@Model.Date.ToString("dd.MM.yyyy") la @Model.Date.ToString("HH:mm")</span></a>
+</div>
 <div class="panel-body">
+
     <p>@Model.Text</p>
-    <br />
-    <span class="label label-success">@Model.Date</span>
-    <br />
-    <i class="glyphicon glyphicon-user"></i><a href="/User/Show/@Model.User.Id"><strong> @Model.User.FirstName @Model.User.LastName</strong></a>
     <br />
 </div>

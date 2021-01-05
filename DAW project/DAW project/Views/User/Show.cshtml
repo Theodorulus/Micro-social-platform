@@ -10,15 +10,15 @@
     if (ViewBag.AlreadySent == 1)
     {
         <div>
-            <a class="btn btn-sm btn btn-success" href="/User/DelFriend/@ViewBag.ButtonId"> Anuleaza Cererea</a>
+            <a class="btn btn-sm btn btn-primary" href="/User/DelFriend/@ViewBag.ButtonId"> Anuleaza Cererea</a>
         </div>
     }
     else if (ViewBag.GotRequest == 1)
     {
-        <div>
-            <a class="btn btn-sm btn btn-success" href="/User/AddFriend/@ViewBag.ButtonId"> Accepta Cererea</a>
+        <div class="go-right">
+            <a class="btn btn-sm btn btn-primary" href="/User/AddFriend/@ViewBag.ButtonId"> Accepta Cererea</a>
         </div>
-        <div>
+        <div class="go-right">
             <a class="btn btn-sm btn btn-danger" href="/User/DelFriend/@ViewBag.ButtonId"> Respinge Cererea</a>
         </div>
     }
@@ -31,7 +31,7 @@
     else
     {
         <div>
-            <a class="btn btn-sm btn btn-success" href="/User/ReqFriend/@ViewBag.ButtonId"> Adauga ca prieten</a>
+            <a class="btn btn-sm btn btn-primary" href="/User/ReqFriend/@ViewBag.ButtonId"> Adauga ca prieten</a>
         </div>
     }
 }
@@ -45,11 +45,23 @@ else
 <div>
     @foreach (DAW_project.Models.Post post in ViewBag.Posts)
     {
-        <div class="panel panel-default">
-            @Html.Partial("PostInfo", post)
+    <div class="panel panel-default">
+        @Html.Partial("PostInfo", post)
+
+        @if (post.Comments.Count() > 0)
+        {
             <div class="panel-footer">
-                <a class="btn btn-sm btn btn-success" href="/Posts/Show/@post.PostId"> Afisare postare</a>
+                @if (post.Comments.Count() > 1)
+                {
+                    <a href="/Posts/Show/@post.PostId#comments" class="clear-link">@post.Comments.Count() comentarii</a>
+                }
+
+                @if (post.Comments.Count() == 1)
+                {
+                    <a href="/Posts/Show/@post.PostId#comments" class="clear-link">1 comentariu</a>
+                }
             </div>
-        </div>
+        }
+    </div>
     }
 </div>
