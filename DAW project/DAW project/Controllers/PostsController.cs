@@ -15,7 +15,7 @@ namespace DAW_project.Controllers
         // GET: Post
         public ActionResult Index()
         {
-            var posts = db.Posts;
+            var posts = db.Posts.Where(p => p.Group == null);// && p.User.Privacy == 0);
             ViewBag.Posts = posts;
             if (TempData.ContainsKey("message"))
             {

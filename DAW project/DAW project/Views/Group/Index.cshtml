@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Afisare grupuri</h2>
+<h1>Lista grupurilor de pe platforma</h1>
 
 @if (ViewBag.utilizatorCurent != null) // daca este un utilizator logat
 {
@@ -13,5 +13,5 @@
 @foreach (DAW_project.Models.Group group in ViewBag.Groups)
 {
     <br />
-    <a href="/Group/Show/@group.GroupId">@group.GroupName</a>
+    <a href="/Group/Show/@group.GroupId" class="clear-link prieten">@group.GroupName</a>
 }

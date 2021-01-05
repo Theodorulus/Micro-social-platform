@@ -4,15 +4,15 @@
     ViewBag.Title = "NewComment";
 }
 
-<h2>NewComment</h2>
+<h2>Care este motivul stergerii?</h2>
 
-@using (Html.BeginForm(actionName: "NewComment", controllerName: "Notifications"))
-{
-    @Html.Label("Care este motivul stergerii?(se poate lasa si gol)")
-    @Html.HiddenFor(m => m.User_Id)
-    @Html.HiddenFor(m => m.Admin_Id)
-    @Html.HiddenFor(m => m.Type)
-    @Html.TextAreaFor(m => m.Text, new { @class = "form-control" })
-    <br />
-    <button class="btn btn-success" type="submit">Trimite</button>
-}
+    @using (Html.BeginForm(actionName: "NewComment", controllerName: "Notifications"))
+    {
+        @Html.Label("(se poate lasa si gol)")
+        @Html.HiddenFor(m => m.User_Id)
+        @Html.HiddenFor(m => m.Admin_Id)
+        @Html.HiddenFor(m => m.Type)
+        @Html.TextAreaFor(m => m.Text, new { @class = "form-control comment-area" })
+        <br />
+        <button class="btn btn-primary" type="submit">Trimite</button>
+    }

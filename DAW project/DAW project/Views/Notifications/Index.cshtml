@@ -3,11 +3,11 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Notificari</h2>
 
 @foreach (DAW_project.Models.Notification notif in ViewBag.Notifications)
 {
-<div class="panel panel-default">
+<div class="panel panel-notification">
 
     @if (notif.Text != null && notif.Type == "Post")
     {
@@ -36,9 +36,8 @@
         <p>Un admin a sters un grup al dumneavoastra.</p>
     }
 
-    <div class="panel-footer">
-        <span class="label label-success">@notif.RequestTime</span>
-    </div>
+            <span class=" date-label">@notif.RequestTime.ToString("dd.MM.yyyy") la @notif.RequestTime.ToString("HH:mm")</span>
+
 </div>
     <br />
     <br />
@@ -47,12 +46,16 @@
 
 <br />
 <div>
-    <p>Cereri de prietenie:</p>
+    @if (ViewBag.Requests.Count > 0)
+    {
+        <div class=" prieten">Cereri de prietenie:</div>
+    }
+
     <br />
     @foreach (var request in ViewBag.Requests)
     {
-        <a href="/User/Show/@request.User1.Id"><h2>@request.User1.FirstName @request.User1.LastName</h2></a>
-        <a class="btn btn-sm btn btn-success" href="/User/AddFriend/@request.User1.Id"> Accepta Cererea </a>
+        <a href="/User/Show/@request.User1.Id"><div class="clear-link prieten">@request.User1.FirstName @request.User1.LastName</div></a>
+        <a class="btn btn-sm btn btn-primary" href="/User/AddFriend/@request.User1.Id"> Accepta Cererea </a>
         <a class="btn btn-sm btn btn-danger" href="/User/DelFriend/@request.User1.Id"> Respinge Cererea </a>
         <br /><br />
     }

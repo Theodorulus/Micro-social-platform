@@ -1,6 +1,8 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background-color: #191919;
+    color: #e0e0dc;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -20,7 +22,7 @@
 input,
 select,
 textarea {
-    max-width: 280px;
+    max-width: 35%;
 }
 
 .colorBg {
@@ -39,4 +41,78 @@ textarea {
 .justifynav{
     display:flex;
     justify-content:space-between;
+}
+
+.date-label {
+    color: #9d9d9d;
+    font-size: 12px;
+}
+
+.clear-link {
+    text-decoration: none;
+    color: #e0e0dc;
+}
+
+    .clear-link :hover {
+        text-decoration: none;
+        color: #e0e0dc;
+    }
+
+.buton {
+    background-color: #FAB162;
+    color: black;
+}
+
+.linie-footer {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #222;
+    margin: 1em 0;
+    padding: 0;
+}
+
+.go-right {
+    display: inline-block;
+}
+
+.speech-bubble {
+    //width: 40%;
+    position: relative;
+    background: #222;
+    border-radius: .4em;
+    padding: 5%;
+}
+
+.panel-comment {
+    width: 35%;
+}
+
+.panel-notification {
+    width: 65%;
+    padding: 1%;
+}
+
+.comment-area {
+    widht: 50%;
+    background-color: #222;
+    border-color: #222;
+    margin: 0px;
+    color: #e0e0dc;
+}
+
+.prieten {
+    font-size: 30px;
+}
+
+.membri {
+    font-size: 25px;
+}
+
+.pad {
+    padding-bottom: 0.1%;
+}
+
+.padd {
+    padding-bottom: 1%;
 }

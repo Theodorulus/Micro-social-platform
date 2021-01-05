@@ -4,11 +4,13 @@
     ViewBag.Title = "Members";
 }
 
-<h2>Memberi @Model.GroupName</h2>
+<h2>Memberi din @Model.GroupName</h2>
+
+<hr class="linie-footer" />
 
 @foreach (DAW_project.Models.ApplicationUser user in ViewBag.Users)
 {
-    <a href="/User/Show/@user.Id"> @user.FirstName @user.LastName </a>
+    <a href="/User/Show/@user.Id" class="clear-link membri"> @user.FirstName @user.LastName </a>
     <br />
 }
 
