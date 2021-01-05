@@ -73,8 +73,8 @@ namespace DAW_project.Controllers
                     return RedirectToAction("Login", "Account");
                 }
             }
-            ViewBag.FriendsUser1 = db.Friendships.Where(u => u.User1.Id == id).ToList();
-            ViewBag.FriendsUser2 = db.Friendships.Where(u => u.User2.Id == id).ToList();
+            ViewBag.FriendsUser1 = db.Friendships.Where(u => u.User1.Id == id && u.Accepted == true).ToList();
+            ViewBag.FriendsUser2 = db.Friendships.Where(u => u.User2.Id == id && u.Accepted == true).ToList();
             ApplicationUser user = db.Users.Find(id);
             return View(user);
         }
