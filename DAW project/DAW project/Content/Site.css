@@ -145,3 +145,7 @@ textarea {
     border-radius: .4em;
     border: 0;
 }
+
+.bell {
+    padding: 1px;
+}
