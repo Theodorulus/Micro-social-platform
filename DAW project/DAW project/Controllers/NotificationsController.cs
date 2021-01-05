@@ -19,7 +19,7 @@ namespace DAW_project.Controllers
         {
             string id = User.Identity.GetUserId();
             ApplicationUser user = db.Users.Find(id);
-            var notifs = user.UserNotifications;
+            var notifs = user.UserNotifications.Reverse();
             ViewBag.Notifications = notifs;
             List<Friendship> requests= db.Friendships.Where(i => i.User2.Id == id && i.Accepted == false).ToList();
             ViewBag.Requests = requests;

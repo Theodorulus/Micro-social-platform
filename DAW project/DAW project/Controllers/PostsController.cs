@@ -109,6 +109,17 @@ namespace DAW_project.Controllers
 
                     else
                     {
+                        if (p.Group != null)
+                        {
+                            if (p.Group.GroupUsers.Contains(user))
+                            {
+                                ViewBag.esteInGrup = 1;
+                            }
+                            else
+                            {
+                                ViewBag.esteInGrup = 0;
+                            }
+                        }
                         SetAccessRights();
                         return View(p);
                     }
@@ -117,6 +128,18 @@ namespace DAW_project.Controllers
 
                 catch (Exception e)
                 {
+                    if(p.Group!= null)
+                    {
+                        if (p.Group.GroupUsers.Contains(user))
+                        {
+                            ViewBag.esteInGrup = 1;
+                        }
+                        else
+                        {
+                            ViewBag.esteInGrup = 0;
+                        }
+                    }
+                    
                     SetAccessRights();
                     return View(p);
                 }

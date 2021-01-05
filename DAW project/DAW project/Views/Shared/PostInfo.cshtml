@@ -2,6 +2,14 @@
     <a href="/User/Show/@Model.User.Id"><i class="glyphicon glyphicon-user"></i><strong class="clear-link"> @Model.User.FirstName @Model.User.LastName</strong></a>
     <br />
     <a href="/Posts/Show/@Model.PostId"><span class=" date-label">@Model.Date.ToString("dd.MM.yyyy") la @Model.Date.ToString("HH:mm")</span></a>
+    <br />
+    @if (Model.Group != null)
+    {
+        <div style="position:relative; color: #ccc">
+            <a href="/Group/Show/@Model.Group.GroupId" class="clear-link" style="position:absolute;bottom: 12px;right: 5px;font-size: 15px">Postata in @Model.Group.GroupName</a>
+        </div>
+        
+    }
 </div>
 <div class="panel-body">
 
