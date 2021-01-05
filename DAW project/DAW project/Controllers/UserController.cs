@@ -52,9 +52,12 @@ namespace DAW_project.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
                 ViewBag.SearchRes = db.Users.Where(s => s.FirstName.Contains(searchString) || s.LastName.Contains(searchString)).ToList();
+                return View();
             }
-
-            return View();
+            else
+            {
+                return Redirect(Request.UrlReferrer.ToString());
+            }
         }
 
         public ActionResult Friends(string id="0")
